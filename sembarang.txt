@@ -62,34 +62,31 @@ bloom-florist/                    # ROOT PROJECT
 │
 └── README.md                     # Documentation
 
-ACTION PLAN SEKARANG:
-PHASE 1: SETUP BASIC (1 jam)
-index.html versi kosong (seperti di atas)
+REKOMENDASI URUTAN DEVELOPMENT:
+CSS Basic (5 menit) → biar ada tampilan
 
-Basic CSS untuk navbar & footer
+Navbar Component (15 menit) → biar bisa navigasi
 
-navbar.js & footer.js untuk render komponen
+Router System (30 menit) → biar routing kerja
 
-router.js basic
+Mock Data (10 menit) → biar ada data
 
-PHASE 2: PAGES (2 jam)
-home.js - Render home page
+Home Page (30 menit) → tampilkan data
 
-products.js - Render products page
+ACTION PLAN 1 JAM:
+Jam 1-15: CSS + Navbar
+Jam 16-45: Router + Basic Pages
+Jam 46-60: Home Page dengan products
 
-about.js - Render about page
+MAU KITA START DARI MANA BREE?
+Pilih:
 
-cart.js - Render cart
+A = CSS Dasar
 
-PHASE 3: FUNCTIONALITY (2 jam)
-product-service.js - Handle product data
+B = JavaScript Router
 
-cart-service.js - Handle cart logic
+C = Navbar Component
 
-product-card.js - Component untuk product
+D = Mock Data
 
-MAU KITA MULAI DARI MANA?
-A. Bikin HTML kosong dulu (sesuai SAP)
-B. Bikin navbar & footer static dulu
-C. Bikin routing system dulu
-D. Bikin mock data dulu
+Atau gw kasih full package (CSS + Navbar + Router dasar) sekalian?

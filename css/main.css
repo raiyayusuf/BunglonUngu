@@ -1,0 +1,53 @@
+/* ===== COLOR PALETTE ===== */
+:root {
+  --primary-dark: #433878;
+  --primary: #7e60bf;
+  --primary-light: #e4b1f0;
+  --primary-soft: #ffe1ff;
+
+  --text-dark: #2d3436;
+  --text-light: #f8f9fa;
+  --bg-light: #fefefe;
+  --shadow: rgba(67, 56, 120, 0.15);
+}
+
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--bg-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.text-primary {
+  color: var(--primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-light) !important;
+}
