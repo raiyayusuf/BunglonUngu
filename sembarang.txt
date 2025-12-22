@@ -1,0 +1,95 @@
+bloom-florist/                    # ROOT PROJECT
+│
+├── index.html                    ⭐ SATU-SATUNYA FILE HTML
+│
+├── css/                          # CSS Modules
+│   ├── main.css                  # Global styles
+│   ├── layout.css                # Grid/flex system
+│   ├── components/               # Component styles
+│   │   ├── navbar.css
+│   │   ├── product-card.css
+│   │   ├── modal.css
+│   │   └── footer.css
+│   └── pages/                    # Page-specific styles
+│       ├── home.css
+│       ├── products.css
+│       ├── cart.css
+│       └── about.css
+│
+├── js/                           # JavaScript Modules
+│   ├── main.js                   # App entry point
+│   ├── router.js                 # Routing system
+│   ├── views/                    # Page controllers
+│   │   ├── home.js
+│   │   ├── products.js
+│   │   ├── product-detail.js
+│   │   ├── cart.js
+│   │   └── about.js
+│   ├── services/                 # Business logic
+│   │   ├── product-service.js
+│   │   ├── cart-service.js
+│   │   └── api-service.js
+│   ├── components/               # UI components
+│   │   ├── navbar.js
+│   │   ├── product-card.js
+│   │   └── modal.js
+│   └── utils/                    # Utilities
+│       ├── dom.js
+│       ├── storage.js
+│       └── helpers.js
+│
+├── data/                         # Mock data (bisa JSON atau JS)
+│   ├── products.js
+│   ├── categories.js
+│   └── testimonials.js
+│
+├── assets/                       # Static assets
+│   ├── images/
+│   │   ├── flowers/              # Product images
+│   │   │   ├── rose-red.jpg
+│   │   │   ├── tulip-yellow.jpg
+│   │   │   └── lily-white.jpg
+│   │   ├── backgrounds/          # Background images
+│   │   │   ├── hero-bg.jpg
+│   │   │   └── pattern.svg
+│   │   └── icons/                # SVG icons
+│   │       ├── cart.svg
+│   │       ├── heart.svg
+│   │       └── menu.svg
+│   └── fonts/                    # Web fonts (jika perlu)
+│       ├── poppins.woff2
+│       └── poppins-bold.woff2
+│
+└── README.md                     # Documentation
+
+ACTION PLAN SEKARANG:
+PHASE 1: SETUP BASIC (1 jam)
+index.html versi kosong (seperti di atas)
+
+Basic CSS untuk navbar & footer
+
+navbar.js & footer.js untuk render komponen
+
+router.js basic
+
+PHASE 2: PAGES (2 jam)
+home.js - Render home page
+
+products.js - Render products page
+
+about.js - Render about page
+
+cart.js - Render cart
+
+PHASE 3: FUNCTIONALITY (2 jam)
+product-service.js - Handle product data
+
+cart-service.js - Handle cart logic
+
+product-card.js - Component untuk product
+
+MAU KITA MULAI DARI MANA?
+A. Bikin HTML kosong dulu (sesuai SAP)
+B. Bikin navbar & footer static dulu
+C. Bikin routing system dulu
+D. Bikin mock data dulu
