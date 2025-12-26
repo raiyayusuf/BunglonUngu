@@ -217,3 +217,38 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* Cart count pulse animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse {
+  animation: pulse 0.3s ease;
+}
+
+.dark-mode {
+  background: #1a1a1a;
+  color: #f0f0f0;
+}
+
+.dark-mode .app-container {
+  background: linear-gradient(to bottom, #2a1a4a 0%, #1a1a1a 100px);
+}
+
+.dark-mode .feature-card {
+  background: #2a2a2a;
+  color: #f0f0f0;
+}
+
+.dark-mode .feature-card p {
+  color: #ccc;
+}
