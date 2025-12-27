@@ -91,6 +91,18 @@ body {
 }
 
 /* ===== APP CONTAINER ===== */
+.app-container {
+  flex: 1;
+  padding: 2rem 1rem;
+  min-height: 70vh;
+  background: linear-gradient(
+    to bottom,
+    var(--primary-soft) 0%,
+    var(--bg-light) 100%
+  );
+}
+
+/* ===== CART SIDEBAR ===== */
 .cart-sidebar {
   position: fixed;
   top: 0;

@@ -1,5 +1,5 @@
-import { renderNavbar } from "./components/navbar";
-import { renderFooter } from "./components/footer";
+import { renderNavbar } from "./components/navbar.js";
+import { renderFooter } from "./components/footer.js";
 
 // application
 function initApp() {

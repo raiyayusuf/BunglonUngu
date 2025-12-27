@@ -9,7 +9,7 @@ export function renderFooter() {
                 <span class="logo">🌸</span>
                 <h3>Bakule Kembang</h3>
             </div>  
-            <p class="Toko Bunga modern dari hasil iseng sinchan dengan sentuha horor untuk semua kebutuhan spesial Anda."></p>
+            <p class="footer-description">Toko Bunga modern dari hasil iseng sinchan dengan sentuha horor untuk semua kebutuhan spesial Anda.</p>
             <div class="social-links">
                 <a href="#" class="social-links" aria-label="Instagram">
                     <i class="fab fa-instagram"></i>
@@ -30,11 +30,11 @@ export function renderFooter() {
         <div class="footer-section">
             <h4>Link Gercep</h4>
             <ul class="footer-links">
-                <i><a href="#home"><i class="fas fa-cheveron-right"></i>Beranda</a></i>
-                <i><a href="#products"><i class="fas fa-cheveron-right"></i>Produk</a></i>
-                <i><a href="#categories"><i class="fas fa-cheveron-right"></i>Kategori</a></i>
-                <i><a href="#about"><i class="fas fa-cheveron-right"></i>Tentang Kami</a></i>
-                <i><a href="#contact"><i class="fas fa-cheveron-right"></i>Kontak</a></i>
+                <i><a href="#home"><i class="fas fa-chevron-right"></i>Beranda</a></i>
+                <i><a href="#products"><i class="fas fa-chevron-right"></i>Produk</a></i>
+                <i><a href="#categories"><i class="fas fa-chevron-right"></i>Kategori</a></i>
+                <i><a href="#about"><i class="fas fa-chevron-right"></i>Tentang Kami</a></i>
+                <i><a href="#contact"><i class="fas fa-chevron-right"></i>Kontak</a></i>
             </ul>
         </div>
 
