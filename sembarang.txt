@@ -62,31 +62,23 @@ bloom-florist/                    # ROOT PROJECT
 │
 └── README.md                     # Documentation
 
-REKOMENDASI URUTAN DEVELOPMENT:
-CSS Basic (5 menit) → biar ada tampilan
 
-Navbar Component (15 menit) → biar bisa navigasi
-
-Router System (30 menit) → biar routing kerja
-
-Mock Data (10 menit) → biar ada data
-
-Home Page (30 menit) → tampilkan data
-
-ACTION PLAN 1 JAM:
-Jam 1-15: CSS + Navbar
-Jam 16-45: Router + Basic Pages
-Jam 46-60: Home Page dengan products
-
-MAU KITA START DARI MANA BREE?
-Pilih:
-
-A = CSS Dasar
+A = CSS Dasar, done
 
 B = JavaScript Router
 
-C = Navbar Component
+C = Navbar Component, done
 
 D = Mock Data
 
-Atau gw kasih full package (CSS + Navbar + Router dasar) sekalian?
+E. PRODUCT CARDS
+
+============================
+
+Classic Bouquets
+
+Premium Arrangements
+
+Wedding Specials
+
+Succulents & Plants

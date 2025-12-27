@@ -9,7 +9,7 @@ export function renderFooter() {
                 <span class="logo">🌸</span>
                 <h3>Bakule Kembang</h3>
             </div>  
-            <p class="footer-description">Toko Bunga modern dari hasil iseng sinchan dengan sentuha horor untuk semua kebutuhan spesial Anda.</p>
+            <p class="footer-description">Toko Bunga modern dari hasil iseng sinchan dengan sentuhan horor untuk semua kebutuhan spesial Anda.</p>
             <div class="social-links">
                 <a href="#" class="social-links" aria-label="Instagram">
                     <i class="fab fa-instagram"></i>
