@@ -1,3 +1,26 @@
+export function updateNavActive(activeHash) {
+  console.log(`🎯 Updating nav active for: ${activeHash}`);
+
+  // Remove active class from all nav links
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.classList.remove("active");
+  });
+
+  // Add active class to current route
+  const activeLink = document.querySelector(`.nav-link[href="${activeHash}"]`);
+  if (activeLink) {
+    activeLink.classList.add("active");
+  }
+
+  // Special case for home (empty hash or #home)
+  if (activeHash === "" || activeHash === "#home") {
+    const homeLink = document.querySelector('.nav-link[href="#home"]');
+    if (homeLink) {
+      homeLink.classList.add("active");
+    }
+  }
+}
+
 export function renderNavbar() {
   const navbar = document.getElementById("navbar");
 

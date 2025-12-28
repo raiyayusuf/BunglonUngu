@@ -71,7 +71,7 @@ export function getTestimonialsByProductId(productId) {
   return testimonials.filter((t) => t.productId === productId);
 }
 
-export function getRecentTestimonials(limit = 3) {
+export function getRecentTestimonials(limit = 6) {
   return [...testimonials]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, limit);
