@@ -5,7 +5,7 @@ export function loadHomePage() {
   console.log("Loading home page...");
 
   const app = document.getElementById("app");
-  const featuredProducts = getFeaturedProducts().slice(0, 10);
+  const featuredProducts = getFeaturedProducts().slice(0, 25);
   const recentTestimonials = getRecentTestimonials(6);
 
   app.innerHTML = /*html*/ `
