@@ -92,7 +92,7 @@ export const flowerProducts = [
     name: "Mawar Pink Soft Buket Broken White",
     category: "bouquet",
     flowerType: "rose",
-    price: 1750000,
+    price: 175000,
     description:
       "Mawar pink muda dengan wrapping broken white, kombinasi yang sangat feminine dan elegant.",
     color: ["Pink Soft", "Broken White", "Putih"],

@@ -1,20 +1,19 @@
-// products
+// data/products.js - FINAL FIXED
 import { flowerProducts, getImagePath } from "./imageMapping.js";
 
-// proses product buat add semua image path
 export const products = flowerProducts.map((product) => ({
   ...product,
   image: getImagePath(product),
   imagePath: getImagePath(product),
 }));
 
-// helper function
+// Helper functions - FIXED VERSION
 export function getProductsByCategory(categoryId) {
-  return products.filter((product) => products.category === categoryId);
+  return products.filter((product) => product.category === categoryId);
 }
 
 export function getProductsByPackaging(packagingType) {
-  return products.filter((product) => products.packaging === packagingType);
+  return products.filter((product) => product.packaging === packagingType);
 }
 
 export function getProductsByFlowerType(flowerType) {
@@ -29,23 +28,17 @@ export function getProductById(id) {
   return products.find((product) => product.id === id);
 }
 
-// unique packaging types
 export const packagingTypes = [
   {
     id: "bouquet",
     name: "Buket",
     description: "Dengan wrapping kertas eksklusif",
   },
-  { id: "bunch", name: "Bunch", description: "Sederhana tanpa wrapping" },
-  {
-    id: "bag",
-    name: "Tas Transparan",
-    description: "Dalam tas transparan praktis",
-  },
+  { id: "bunch", name: "Iketan", description: "Sederhana tanpa wrapping" },
+  { id: "bag", name: "Tas", description: "Dalam tas transparan praktis" },
 ];
 
-// price range
-export const priceRanges = {
+export const priceRange = {
   min: Math.min(...products.map((p) => p.price)),
   max: Math.max(...products.map((p) => p.price)),
   average: Math.round(

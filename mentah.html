@@ -1,55 +1,56 @@
-<section class="hero-section">
-  <div class="hero-content">
-    <h2 class="hero-title">Keindahan dalam Setiap Kelopak</h2>
-    <p class="hero-subtitle">
-      Bakule Kembang menghadirkan buket bunga segar dengan sentuhan horor dan
-      modern
-    </p>
-    <div class="hero-actions">
-      <a href="#product" class="btn btn-primary"
-        >\ <i class="fas fa-store"></i> Lihat Koleksi
-      </a>
-      <a href="#categories" class="btn btn-outline">
-        <i class="fas fa-list"></i> Jelajahi Kategori
-      </a>
+<!-- Featured Products Section -->
+<section class="featured-products-section">
+  <h2 class="section-title">Produk Unggulan</h2>
+  <div class="products-grid" id="featured-products-grid">
+    ${featured-products.map(products => `
+    <div class="product-card" data-id="${products.id}">
+      <div class="product-image">
+        <img src="${product.image}" alt="${product.name}" loading="lazy" />
+        ${product.featured ? '<span class="featured-badge">Featured</span>' :
+        ''}
+      </div>
+
+      <div class="product-info">
+        <h3 class="product-name">${products.name}</h3>
+        <p class="product-description">
+          ${products.description.substring(0, 100)}...
+        </p>
+        <div class="product-meta">
+          <span class="product-price"
+            >Rp${products.price.toLocaleString('id-ID')}</span
+          >
+          <span class="product-rating">⭐ ${product.rating}</span>
+        </div>
+        <button class="btn btn-primary add-to-cart" data-id="${product-id}">
+          <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="hero-image">
-    <!-- Placeholder gambar -->
-    <div>
-      <i class="fas fa-flower"></i>
-      <p>Hero image akan di tampilkan di sini</p>
-    </div>
+    `).join('')}
   </div>
 </section>
 
-<section class="features-section">
-  <h3 class="section-title">Mengapa Memilih Kami?</h3>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🌸</div>
-      <h4>Bunga Segar</h4>
-      <p>Bunga pilihan dengan kualitas terbaik langsung dari petani handal</p>
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <h2 class="section-title">💬 Testimoni Pelanggan</h2>
+  <div class="testimonials-grid">
+    ${recentTestimonial.map(testimonial => `
+    <div class="testimonial-card">
+      <div class="testimonial-header">
+        <div class="testimonial-rating">
+          ${'⭐'.repeat(testimonial.rating)}${testimonial.rating < 5 ?
+          '*'.repeat(5 - testimonial.rating) : ''}
+        </div>
+        <div class="testimonial-date">
+          ${new Date(testimonial.date).toLocaleString('id-ID')}
+        </div>
+      </div>
+      <p class="testimonial-text">"${testimonial.text}"</p>
+      <div class="testimonial-author">
+        <strong>${testimonial.name}</strong>
+        <span>${testimonial.role}</span>
+      </div>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">🚚</div>
-      <h4>Gratis Pengiriman</h4>
-      <p>
-        Gratis ongkir untuk area Yogyakarta dengan pembelian minimal Rp250.000
-      </p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💝</div>
-      <h4>Kustomisasi</h4>
-      <p>Buat buket sesuai keinginan Anda dengan bantuan florist profesional</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">⭐</div>
-      <h4>Kualitas Terbaik</h4>
-      <p>
-        Garansi 100% kepuasan pelanggan dengan kualitas terbaik atau uang
-        kembali
-      </p>
-    </div>
+    `).join('')}
   </div>
 </section>

@@ -93,7 +93,7 @@ function setupNewsletterForm() {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       const emailInput = this.querySelector('input[type="email"]');
-      const email = emailInput.ariaValueMax.trim();
+      const email = emailInput.value.trim();
 
       if (email) {
         // API call
