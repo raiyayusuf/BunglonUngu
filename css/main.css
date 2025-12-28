@@ -93,7 +93,7 @@ body {
 /* ===== APP CONTAINER ===== */
 .app-container {
   flex: 1;
-  padding: 2rem 1rem;
+  padding: 2rem 8rem;
   min-height: 70vh;
   background: linear-gradient(
     to bottom,

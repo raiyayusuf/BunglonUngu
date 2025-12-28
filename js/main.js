@@ -1,31 +1,27 @@
-// js/main.js - FINAL FIXED VERSION
 import { renderNavbar } from "./components/navbar.js";
 import { renderFooter } from "./components/footer.js";
 import { getFeaturedProducts } from "../data/products.js";
 import { getRecentTestimonials } from "../data/testimonials.js";
 
-// Initialize the application
+// application
 function initApp() {
-  console.log("🚀 Bakule Kembang SPA Initializing...");
+  console.log("Bakule Kembang Initializing...");
 
-  // Render navbar and footer
   renderNavbar();
   renderFooter();
 
-  // Hide loading spinner
   setTimeout(() => {
     const loading = document.getElementById("loading");
     if (loading) {
       loading.style.opacity = "0";
       setTimeout(() => {
         loading.style.display = "none";
-        // Show initial content (home page)
+        // show home page
         showHomePage();
-      }, 300);
+      }, 500);
     }
-  }, 1000);
-
-  console.log("✅ App initialized successfully");
+  }, 1000); // loading time nya
+  console.log("Application started✅");
 }
 
 function showHomePage() {
@@ -33,7 +29,7 @@ function showHomePage() {
   const featuredProducts = getFeaturedProducts().slice(0, 4);
   const recentTestimonials = getRecentTestimonials(3);
 
-  app.innerHTML = `
+  app.innerHTML = /*html*/ `
         <section class="hero-section">
             <div class="hero-content">
                 <h2 class="hero-title">Keindahan dalam Setiap Kelopak</h2>
@@ -174,13 +170,119 @@ function setupAddToCartButtons() {
   });
 }
 
-// Add CSS for new sections
+// CSS untuk home page
+
 const style = document.createElement("style");
-style.textContent = `
-    .featured-products-section, .testimonials-section {
+style.textContent = /*css*/ `
+    .hero-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+        padding: 3rem 0;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        color: var(--primary-dark);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 2.5;
+        color: #666;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .hero-image {
+        background: linear-gradient(135deg, var(--primary-soft) 0%, var(--primary-light) 100%);
+        border-radius: 20px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        color: white;
+    }
+
+    .image-placeholder {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .image-placeholder i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.8;
+    }
+
+    .features-section {
         margin-top: 4rem;
         padding-top: 3rem;
         border-top: 2px solid var(--primary-soft);
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2rem;
+        color: var(--primary-dark);
+        margin-bottom: 2rem;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px var(--shadow);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card h4 {
+        color: var(--primary);
+        margin-bottom: 0.8rem;
+        font-size: 1.3rem;
+    }
+
+    .feature-card p {
+        color: #666;
+        line-height: 1.5;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    // =========================
+
+    .featured-products-section {
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 2px solid var(--primary-soft);
+    }
+
+    .testimonials-section {
+    margin-top: 5rem;
+    // padding-top: 2rem;
+    border-top: 2px solid var(--primary-soft);
+    // padding-bottom: 4rem;
     }
     
     .section-title {
@@ -188,6 +290,7 @@ style.textContent = `
         font-size: 2rem;
         color: var(--primary-dark);
         margin-bottom: 2rem;
+        margin-top: 2rem;
     }
     
     .products-grid {
@@ -213,12 +316,17 @@ style.textContent = `
         position: relative;
         height: 200px;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f8f9fa;
     }
     
     .product-image img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        max-height: 100%;
     }
     
     .featured-badge {
@@ -314,8 +422,19 @@ style.textContent = `
         color: #333;
         font-size: 0.9rem;
     }
-    
+
+    // =========================
+
     @media (max-width: 768px) {
+        .hero-section {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .hero-actions {
+            justify-content: center;
+        }
+
         .products-grid, .testimonials-grid {
             grid-template-columns: 1fr;
         }
@@ -328,7 +447,6 @@ style.textContent = `
 
 document.head.appendChild(style);
 
-// Start the app
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initApp);
 } else {

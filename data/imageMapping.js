@@ -4,7 +4,7 @@ export const flowerProducts = [
   // Bouquet Flowers====================================
   {
     id: 1,
-    filename: "rose(red)-bouquet(white).jpg",
+    filename: "rose-red-bouquet-white.jpg",
     name: "Mawar Merah Buket Putih",
     category: "bouquet",
     flowerType: "rose",
@@ -20,7 +20,7 @@ export const flowerProducts = [
   },
   {
     id: 2,
-    filename: "rose(white)-bouquet(black).jpg",
+    filename: "rose-white-bouquet-black.jpg",
     name: "Mawar Putih Buket Hitam",
     category: "bouquet",
     flowerType: "rose",
@@ -37,7 +37,7 @@ export const flowerProducts = [
 
   {
     id: 3,
-    filename: "rose(white-pink)-bouquet(pink).jpg",
+    filename: "rose-white-pink-bouquet-pink.jpg",
     name: "Mawar Putih Pink Buket Pink",
     category: "bouquet",
     flowerType: "rose",
@@ -54,7 +54,7 @@ export const flowerProducts = [
 
   {
     id: 4,
-    filename: "rose(white-red)-bouquet(cream).jpg",
+    filename: "rose-white-red-bouquet-cream.jpg",
     name: "Mawar Putih Merah Buket Cream",
     category: "bouquet",
     flowerType: "rose",
@@ -71,7 +71,7 @@ export const flowerProducts = [
 
   {
     id: 6,
-    filename: "rose(peach)-bouquet(brokenwhite).jpg",
+    filename: "rose-peach-bouquet-brokenwhite.jpg",
     name: "Mawar Peach Buket Broken White",
     category: "bouquet",
     flowerType: "rose",
@@ -88,7 +88,7 @@ export const flowerProducts = [
 
   {
     id: 7,
-    filename: "rose(pinksoft)-bouquet(brokenwhite).jpg",
+    filename: "rose-pinksoft-bouquet-brokenwhite.jpg",
     name: "Mawar Pink Soft Buket Broken White",
     category: "bouquet",
     flowerType: "rose",
@@ -105,7 +105,7 @@ export const flowerProducts = [
 
   {
     id: 8,
-    filename: "gerbera(pink)-bouquet(brokenwhite).jpg",
+    filename: "gerbera-pink-bouquet-brokenwhite.jpg",
     name: "Gerbera Pink Buket Broken White",
     category: "bouquet",
     flowerType: "gerbera",
@@ -122,7 +122,7 @@ export const flowerProducts = [
 
   {
     id: 9,
-    filename: "mix(gradient-white-pink)-bouquet(cream).jpg",
+    filename: "mix-bouquet-cream.jpg",
     name: "Mixied Flowers Buket Cream",
     category: "bouquet",
     flowerType: "mixed",
@@ -139,7 +139,7 @@ export const flowerProducts = [
 
   {
     id: 10,
-    filename: "rose(gradient-white-pink)-bouquet(cream).jpg",
+    filename: "rose-gradient-white-pink-bouquet-cream.jpg",
     name: "Mawar Gradient Putih Pink Buket Cream",
     category: "bouquet",
     flowerType: "rose",
@@ -156,7 +156,7 @@ export const flowerProducts = [
 
   {
     id: 11,
-    filename: "tulip(white-pink)-bouquet(green).jpg",
+    filename: "tulip-white-pink-bouquet-green.jpg",
     name: "Tulip Putih Pink Buket Hijau",
     category: "bouquet",
     flowerType: "tulip",
@@ -173,7 +173,7 @@ export const flowerProducts = [
 
   {
     id: 12,
-    filename: "tulip(white-pink)-bouquet(newspaper).jpg",
+    filename: "tulip-white-pink-bouquet-newspaper.jpg",
     name: "Tulip Putih Pink Buket Newspaper",
     category: "bouquet",
     flowerType: "tulip",
@@ -190,7 +190,7 @@ export const flowerProducts = [
   // Bunch Flowers =====================================
   {
     id: 13,
-    filename: "gerbera(white)-bunch(brown).jpg",
+    filename: "gerbera-white-bunch-brown.jpg",
     name: "Gerbera Putih Bunch Brown",
     category: "bunch",
     flowerType: "gerbera",
@@ -207,7 +207,7 @@ export const flowerProducts = [
 
   {
     id: 14,
-    filename: "hydrangea(white)-rose(yellow)-bunch(green).jpg",
+    filename: "hydrangea-white-rose-yellow-bunch-green.jpg",
     name: "Hydrangea Putih & Mawar Kuning Bunch Hijau",
     category: "bunch",
     flowerType: "mixed",
@@ -224,7 +224,7 @@ export const flowerProducts = [
 
   {
     id: 15,
-    filename: "rose(pink)-bunch(pink).jpg",
+    filename: "rose-pink-bunch-pink.jpg",
     name: "Mawar Pink Bunch Pink",
     category: "bunch",
     flowerType: "rose",
@@ -241,7 +241,7 @@ export const flowerProducts = [
 
   {
     id: 16,
-    filename: "rose(white-pink)-bunch(pink).jpg",
+    filename: "rose-white-pink-bunch-pink.jpg",
     name: "Mawar Putih Pink Bunch Pink",
     category: "bunch",
     flowerType: "rose",
@@ -258,7 +258,7 @@ export const flowerProducts = [
 
   {
     id: 17,
-    filename: "tulip(pink)-bunch(pink).jpg",
+    filename: "tulip-pink-bunch-pink.jpg",
     name: "Tulip Pink Bunch Pink",
     category: "bunch",
     flowerType: "tulip",
@@ -275,7 +275,7 @@ export const flowerProducts = [
 
   {
     id: 18,
-    filename: "tulip(red)-bunch(red).jpg",
+    filename: "tulip-red-bunch-red.jpg",
     name: "Tulip Merah Bunch Merah",
     category: "bunch",
     flowerType: "tulip",
@@ -292,7 +292,7 @@ export const flowerProducts = [
   // Bag Flowers =======================================
   {
     id: 19,
-    filename: "rose(red-white)-bag.jpg",
+    filename: "rose-red-white-bag.jpg",
     name: "Mawar Merah & Putih Tas Transparan",
     category: "bag",
     flowerType: "rose",
@@ -309,7 +309,7 @@ export const flowerProducts = [
 
   {
     id: 20,
-    filename: "rose(red)-bag.jpg",
+    filename: "rose-red-bag.jpg",
     name: "Mawar Merah Tas Transparan",
     category: "bag",
     flowerType: "rose",
@@ -326,7 +326,7 @@ export const flowerProducts = [
 
   {
     id: 21,
-    filename: "rose(pink)-bag.jpg",
+    filename: "rose-pink-bag.jpg",
     name: "Mawar Pink Tas Transparan",
     category: "bag",
     flowerType: "rose",
@@ -343,7 +343,7 @@ export const flowerProducts = [
 
   {
     id: 22,
-    filename: "rose(white-pink)-bag.jpg",
+    filename: "rose-white-pink-bag.jpg",
     name: "Mawar Putih & Pink Tas Transparan",
     category: "bag",
     flowerType: "rose",
@@ -360,7 +360,7 @@ export const flowerProducts = [
 
   {
     id: 23,
-    filename: "rose(white-purple)-bag.jpg",
+    filename: "rose-white-purple-bag.jpg",
     name: "Mawar Putih Ungu Tas Transparan",
     category: "bag",
     flowerType: "rose",
@@ -377,7 +377,7 @@ export const flowerProducts = [
 
   {
     id: 24,
-    filename: "rose(white)-bag.jpg",
+    filename: "rose-white-bag.jpg",
     name: "Mawar Putih Tas Transparan",
     category: "bag",
     flowerType: "rose",
@@ -394,7 +394,7 @@ export const flowerProducts = [
 
   {
     id: 25,
-    filename: "rose(yellow)-bag.jpg",
+    filename: "rose-yellow-bag.jpg",
     name: "Mawar Kuning Tas Transparan",
     category: "bag",
     flowerType: "rose",
@@ -411,9 +411,20 @@ export const flowerProducts = [
 ];
 
 // function untuk cari image path
+// export function getImagePath(product) {
+//   const folder = product.packaging;
+//   const filename = product.filename;
+//   return `assets/images/flowers/${folder}/${product.filename}`;
+// }
+
 export function getImagePath(product) {
   const folder = product.packaging;
-  return `assets/images/flowers/${folder}/${product.filename}`;
+  const filename = product.filename;
+  const path = `./assets/image/flowers/${folder}/${filename}`;
+
+  console.log(`🖼️ [DEBUG] ${product.name}: ${path}`);
+
+  return path;
 }
 
 // get unique catergory

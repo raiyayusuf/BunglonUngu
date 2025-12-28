@@ -1,11 +1,24 @@
 // data/products.js - FINAL FIXED
+// import { flowerProducts, getImagePath } from "./imageMapping.js";
+
+// export const products = flowerProducts.map((product) => ({
+//   ...product,
+//   image: getImagePath(product),
+//   imagePath: getImagePath(product),
+// }));
+
 import { flowerProducts, getImagePath } from "./imageMapping.js";
 
-export const products = flowerProducts.map((product) => ({
-  ...product,
-  image: getImagePath(product),
-  imagePath: getImagePath(product),
-}));
+export const products = flowerProducts.map((product) => {
+  const imagePath = getImagePath(product);
+  console.log(`📦 Mapping ${product.name} → ${imagePath}`);
+
+  return {
+    ...product,
+    image: imagePath,
+    imagePath: imagePath,
+  };
+});
 
 // Helper functions - FIXED VERSION
 export function getProductsByCategory(categoryId) {
