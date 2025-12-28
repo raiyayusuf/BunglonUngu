@@ -69,7 +69,7 @@ B = JavaScript Router
 
 C = Navbar Component, done
 
-D = Mock Data
+D = Mock Data, done
 
 E. PRODUCT CARDS
 
