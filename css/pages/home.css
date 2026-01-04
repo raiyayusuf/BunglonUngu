@@ -153,6 +153,10 @@
 
 .product-info {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 200px;
 }
 
 .product-name {
@@ -182,7 +186,7 @@
 }
 
 .product-rating {
-  background: #ffd700;
+  background: #ffef5f;
   color: #333;
   padding: 3px 8px;
   border-radius: 12px;

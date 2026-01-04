@@ -1,5 +1,5 @@
-import { getFeaturedProducts } from "../../data/products.js";
-import { getRecentTestimonials } from "../../data/testimonials.js";
+import { getFeaturedProducts } from "../data/products.js";
+import { getRecentTestimonials } from "../data/testimonials.js";
 
 export function loadHomePage() {
   console.log("Loading home page...");

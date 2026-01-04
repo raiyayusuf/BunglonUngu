@@ -1,56 +1,71 @@
-<!-- Featured Products Section -->
-<section class="featured-products-section">
-  <h2 class="section-title">Produk Unggulan</h2>
-  <div class="products-grid" id="featured-products-grid">
-    ${featured-products.map(products => `
-    <div class="product-card" data-id="${products.id}">
-      <div class="product-image">
-        <img src="${product.image}" alt="${product.name}" loading="lazy" />
-        ${product.featured ? '<span class="featured-badge">Featured</span>' :
-        ''}
-      </div>
-
-      <div class="product-info">
-        <h3 class="product-name">${products.name}</h3>
-        <p class="product-description">
-          ${products.description.substring(0, 100)}...
-        </p>
-        <div class="product-meta">
-          <span class="product-price"
-            >Rp${products.price.toLocaleString('id-ID')}</span
-          >
-          <span class="product-rating">⭐ ${product.rating}</span>
-        </div>
-        <button class="btn btn-primary add-to-cart" data-id="${product-id}">
-          <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-        </button>
-      </div>
-    </div>
-    `).join('')}
+<div class="product-image-container">
+  <img
+    src="${product.image}"
+    alt="${product.name}"
+    class="product-image"
+    loading="lazy"
+    onerror="this.src='assets/image/placeholder.jpg'"
+  />
+  <div class="product-badges">
+    ${featuredBadge}
+    <span class="product-badge category">
+      ${categoryIcons[product.category] || "🌼"}
+      ${categoryNames[product.category] || product.category}
+    </span>
   </div>
-</section>
+  <button class="quick-view-btn" data-id="${product.id}">
+    <i class="fas fa-eye"></i>
+  </button>
+</div>
 
-<!-- Testimonials Section -->
-<section class="testimonials-section">
-  <h2 class="section-title">💬 Testimoni Pelanggan</h2>
-  <div class="testimonials-grid">
-    ${recentTestimonial.map(testimonial => `
-    <div class="testimonial-card">
-      <div class="testimonial-header">
-        <div class="testimonial-rating">
-          ${'⭐'.repeat(testimonial.rating)}${testimonial.rating < 5 ?
-          '*'.repeat(5 - testimonial.rating) : ''}
-        </div>
-        <div class="testimonial-date">
-          ${new Date(testimonial.date).toLocaleString('id-ID')}
-        </div>
-      </div>
-      <p class="testimonial-text">"${testimonial.text}"</p>
-      <div class="testimonial-author">
-        <strong>${testimonial.name}</strong>
-        <span>${testimonial.role}</span>
-      </div>
+<div class="product-info">
+  <h3 class="product-name">${product.name}</h3>
+  <p class="product-description">${product.description}</p>
+
+  <div class="product-meta">
+    <div class="meta-item">
+      <span class="meta-label">Jenis:</span>
+      <span class="meta-value flower-type">
+        ${flowerIcons[product.flowerType] || "🌼"}
+        ${flowerNames[product.flowerType] || product.flowerType}
+      </span>
     </div>
-    `).join('')}
+
+    <div class="meta-item">
+      <span class="meta-label">Warna:</span>
+      <span class="meta-value colors">
+        ${product.color.map(c => '<span
+          class="color-chip"
+          style="background-color: ' + getColorCode(c) + '"
+          title="' + c + '"
+        ></span
+        >').join('')}
+      </span>
+    </div>
+
+    <div class="meta-item tags">
+      ${product.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+    </div>
   </div>
-</section>
+
+  <div class="product-footer">
+    <div class="price-rating">
+      <span class="product-price"
+        >Rp ${product.price.toLocaleString('id-ID')}</span
+      >
+      <span class="product-rating">
+        ⭐ ${product.rating}
+        <small>(${Math.floor(Math.random() * 50) + 10})</small>
+      </span>
+    </div>
+
+    <div class="product-actions">
+      <button class="btn btn-outline view-detail-btn" data-id="${product.id}">
+        <i class="fas fa-info-circle"></i> Detail
+      </button>
+      <button class="btn btn-primary add-to-cart-btn" data-id="${product.id}">
+        <i class="fas fa-cart-plus"></i> +
+      </button>
+    </div>
+  </div>
+</div>

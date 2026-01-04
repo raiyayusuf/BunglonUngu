@@ -82,3 +82,11 @@ Premium Arrangements
 Wedding Specials
 
 Succulents & Plants
+
+
+Flow Kerja habis ini:
+Step 1 → Bikin product-card.js dulu (komponen dasar)
+Step 2 → Bikin categories.js (data kategori)
+Step 3 → Isi product-services.js (fungsi filter/search)
+Step 4 → Ubah views/products.js (halaman utama)
+Step 5 → Bikin products.css (styling)

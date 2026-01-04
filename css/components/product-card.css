@@ -1,0 +1,69 @@
+.product-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.product-badge.featured {
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+  color: #8a6500;
+}
+
+.product-badge.category {
+  background: rgba(255, 255, 255, 0.9);
+  color: #433878;
+  backdrop-filter: blur(4px);
+}
+
+.color-chip {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tag {
+  padding: 0.2rem 0.5rem;
+  background: #f0ebff;
+  color: #7e60bf;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-block;
+  margin: 0.1rem;
+}
+
+.quick-view-btn {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  color: #433878;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.add-to-cart-btn.added {
+  background: #00b894;
+  animation: pulse 0.5s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
