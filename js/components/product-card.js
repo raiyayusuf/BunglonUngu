@@ -190,11 +190,15 @@ export function createProductCard(product) {
 }
 
 export function renderProductCards(products, container) {
-  if (!container) return;
+  console.log("🎨 renderProductCards called, products:", products?.length);
 
-  container.innerHTML = "";
+  if (!container) {
+    console.error("❌ Container is null!");
+    return;
+  }
 
-  if (products.length === 0) {
+  if (!products || products.length === 0) {
+    console.log("📭 No products to render");
     container.innerHTML = `
       <div class="no-products">
         <i class="fas fa-search fa-3x"></i>
@@ -205,8 +209,16 @@ export function renderProductCards(products, container) {
     return;
   }
 
+  container.innerHTML = "";
+
   products.forEach((product) => {
-    const card = createProductCard(product);
-    container.appendChild(card);
+    try {
+      const card = createProductCard(product);
+      container.appendChild(card);
+    } catch (error) {
+      console.error("❌ Error creating card for product:", product.id, error);
+    }
   });
+
+  console.log("✅ Products rendered:", products.length);
 }

@@ -158,6 +158,18 @@ export function getFilteredAndSortedProducts(
   filters = {},
   sortBy = "featured"
 ) {
+  console.log("🔄 getFilteredAndSortedProducts START");
+  console.log("Filters:", JSON.stringify(filters));
+  console.log("Sort by:", sortBy);
+
   const filtered = filterProducts(filters);
+  console.log("✅ Filtered result:", filtered?.length, "products");
+
+  const sorted = sortProducts(filtered, sortBy);
+  console.log("✅ Sorted result:", sorted?.length, "products");
+
+  console.log("🔄 getFilteredAndSortedProducts END");
+
+  // return sorted || [];
   return sortProducts(filtered, sortBy);
 }

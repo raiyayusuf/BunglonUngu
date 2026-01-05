@@ -447,11 +447,13 @@ function updateProductsDisplay() {
   const noProductsEl = document.getElementById("no-products");
 
   if (filteredProducts.length === 0) {
-    gridEl.innerHTML = "";
+    if (gridEl) gridEl.innerHTML = "";
     if (noProductsEl) noProductsEl.classList.remove("hidden");
   } else {
     if (noProductsEl) noProductsEl.classList.add("hidden");
-    renderProductCards(filteredProducts, gridEl);
+    if (gridEl) {
+      renderProductCards(filteredProducts, gridEl);
+    }
   }
 
   updateActiveFilters();
@@ -703,18 +705,24 @@ function removeFilter(type, value) {
       currentFilters.category = currentFilters.category.filter(
         (c) => c !== value
       );
-      document.querySelector(
+      const categoryCheckbox = document.querySelector(
         `input[name="category"][value="${value}"]`
-      ).checked = false;
+      );
+      if (categoryCheckbox) {
+        categoryCheckbox.checked = false;
+      }
       break;
 
     case "flowerType":
       currentFilters.flowerType = currentFilters.flowerType.filter(
         (t) => t !== value
       );
-      document.querySelector(
+      const flowerTypeCheckbox = document.querySelector(
         `input[name="flowerType"][value="${value}"]`
-      ).checked = false;
+      );
+      if (flowerTypeCheckbox) {
+        flowerTypeCheckbox.checked = false;
+      }
       break;
 
     case "priceRange":
@@ -726,26 +734,42 @@ function removeFilter(type, value) {
 
     case "colors":
       currentFilters.colors = currentFilters.colors.filter((c) => c !== value);
-      document
-        .querySelector(`.color-chip[data-color="${value}"]`)
-        ?.classList.remove("selected");
+      const colorChip = document.querySelector(
+        `.color-chip[data-color="${value}"]`
+      );
+      if (colorChip) {
+        colorChip.classList.remove("selected");
+      }
       break;
 
     case "tags":
       currentFilters.tags = currentFilters.tags.filter((t) => t !== value);
-      document
-        .querySelector(`.tag-filter[data-tag="${value}"]`)
-        ?.classList.remove("selected");
+      const tagButton = document.querySelector(
+        `.tag-filter[data-tag="${value}"]`
+      );
+      if (tagButton) {
+        tagButton.classList.remove("selected");
+      }
       break;
 
     case "featuredOnly":
       currentFilters.featuredOnly = false;
-      document.querySelector('input[name="featuredOnly"]').checked = false;
+      const featuredCheckbox = document.querySelector(
+        'input[name="featuredOnly"]'
+      );
+      if (featuredCheckbox) {
+        featuredCheckbox.checked = false;
+      }
       break;
 
     case "inStockOnly":
       currentFilters.inStockOnly = true;
-      document.querySelector('input[name="inStockOnly"]').checked = true;
+      const inStockCheckbox = document.querySelector(
+        'input[name="inStockOnly"]'
+      );
+      if (inStockCheckbox) {
+        inStockCheckbox.checked = true;
+      }
       break;
   }
 }
