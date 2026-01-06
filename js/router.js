@@ -4,6 +4,7 @@ import { loadAboutPage } from "./views/about.js";
 import { loadCartPage } from "./views/cart.js";
 import { loadProductDetailPage } from "./views/product-detail.js";
 import { updateNavActive } from "./components/navbar.js";
+import { loadContactPage } from "./views/contact.js";
 
 // config router
 const routes = {
@@ -72,16 +73,6 @@ export function router() {
 
 export function navigateTo(hash) {
   window.location.hash = hash;
-}
-
-function loadContactPage() {
-  const app = document.getElementById("app");
-  app.innerHTML = `    
-    <div class="page-container">
-      <h1>Kontak Kami</h1>
-      <p>Halaman kontak sedang dalam pengembangan...</p>
-    </div>
-  `;
 }
 
 function loadCategoriesPage() {
