@@ -160,17 +160,8 @@ export function createProductCard(product) {
   }
 
   if (addToCartBtn) {
-    addToCartBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      addToCart(product.id);
-
-      addToCartBtn.innerHTML = '<i class="fas fa-check"></i> ✓';
-      addToCartBtn.classList.add("added");
-      setTimeout(() => {
-        addToCartBtn.innerHTML = '<i class="fas fa-cart-plus"></i> +';
-        addToCartBtn.classList.remove("added");
-      }, 1000);
-    });
+    addToCartBtn.setAttribute("data-action", "add-to-cart");
+    addToCartBtn.setAttribute("data-id", product.id);
   }
 
   if (quickViewBtn) {

@@ -1,5 +1,6 @@
 import { getFeaturedProducts } from "../data/products.js";
 import { getRecentTestimonials } from "../data/testimonials.js";
+import { addToCart } from "../services/cart-service.js";
 
 export function loadHomePage() {
   console.log("Loading home page...");
@@ -133,25 +134,50 @@ export function loadHomePage() {
 }
 
 function setupHomePageEvents() {
-  // Add to cart buttons
-  const addToCartButtons = document.querySelectorAll(".add-to-cart");
-  addToCartButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const productId = parseInt(this.getAttribute("data-id"));
-      console.log(`🛒 Adding product ${productId} to cart`);
-      alert("Produk berhasil ditambahkan ke keranjang!");
-    });
-  });
+  console.log("🏠 Setting up home page events...");
 
-  // Product card clicks (for future detail page)
-  const productCards = document.querySelectorAll(".product-card");
-  productCards.forEach((card) => {
-    card.addEventListener("click", function (e) {
-      if (!e.target.closest(".add-to-cart")) {
-        const productId = this.getAttribute("data-id");
-        console.log(`👁️ Viewing product ${productId} detail`);
-        // Will implement later: window.location.hash = `#product/${productId}`;
-      }
-    });
-  });
+  // HAPUS semua event listener lama
+  document.body.removeEventListener("click", handleBodyClick);
+
+  // PASANG event delegation
+  document.body.addEventListener("click", handleBodyClick);
+}
+
+// Event delegation handler
+function handleBodyClick(e) {
+  // Handle add to cart buttons
+  if (e.target.closest(".add-to-cart")) {
+    const button = e.target.closest(".add-to-cart");
+    e.stopPropagation();
+    e.preventDefault();
+
+    const productId = parseInt(button.getAttribute("data-id"));
+    console.log(
+      `🛒 [DELEGATION] Adding product ${productId} to cart - SINGLE CALL`
+    );
+
+    const success = addToCart(productId, 1);
+
+    if (success) {
+      // Visual feedback
+      const originalHTML = button.innerHTML;
+      button.innerHTML = '<i class="fas fa-check"></i> Ditambahkan!';
+      button.classList.add("added");
+      button.disabled = true;
+
+      // Reset button after 2 seconds
+      setTimeout(() => {
+        button.innerHTML = originalHTML;
+        button.classList.remove("added");
+        button.disabled = false;
+      }, 2000);
+    }
+  }
+
+  // Handle product card clicks
+  if (e.target.closest(".product-card") && !e.target.closest(".add-to-cart")) {
+    const card = e.target.closest(".product-card");
+    const productId = card.getAttribute("data-id");
+    console.log(`👁️ Viewing product ${productId} detail`);
+  }
 }

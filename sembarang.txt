@@ -90,3 +90,48 @@ Step 2 → Bikin categories.js (data kategori)
 Step 3 → Isi product-services.js (fungsi filter/search)
 Step 4 → Ubah views/products.js (halaman utama)
 Step 5 → Bikin products.css (styling)
+
+
+Minggu 1: Cart System + Checkout Sederhana
+Minggu 2: Product Detail + Related Products
+Minggu 3: UI Polish + Animations
+Minggu 4: Advanced Features
+
+1. cart-service.js (Complete)
+2. Add to Cart buttons (working)
+3. Cart count in navbar
+4. Cart sidebar/overlay
+5. Update/Remove items
+
+1. Cart page (#cart route)
+2. Checkout form (mock)
+3. Order summary
+4. Success page
+
+1. LocalStorage persistence
+2. Cart animations
+3. Empty state design
+4. Quantity controls
+
+
+STEP 1: LENGKAPI cart-service.js
+File ini akan jadi single source of truth untuk cart logic.
+
+STEP 2: BUAT CART UI COMPONENT
+Cart sidebar untuk desktop
+
+Cart modal untuk mobile
+
+Cart page untuk detail
+
+STEP 3: CONNECT KE PRODUCT CARD
+Add to cart button feedback
+
+Update cart count real-time
+
+STEP 4: CHECKOUT FLOW (MOCK)
+Form validation
+
+Order confirmation
+
+Success message

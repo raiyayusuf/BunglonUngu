@@ -1,4 +1,5 @@
 import { products } from "../data/products.js";
+import { addToCart } from "../services/cart-service.js";
 import {
   categories,
   flowerTypes,
@@ -8,11 +9,13 @@ import {
   sortOptions,
   getAllFilterValues,
 } from "../data/categories.js";
+
 import {
   filterProducts,
   sortProducts,
   getFilteredAndSortedProducts,
 } from "../services/product-service.js";
+
 import { renderProductCards } from "../components/product-card.js";
 
 let currentFilters = {
@@ -480,9 +483,40 @@ function updateActiveFilters() {
   }
 }
 
+function setupProductCardEvents() {
+  document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
+    button.addEventListener("click", async function (e) {
+      e.stopPropagation();
+      const productId = parseInt(this.dataset.id);
+
+      try {
+        const { addToCart } = await import("../services/cart-service.js");
+        const success = addToCart(productId, 1);
+
+        if (success) {
+          const originalHTML = this.innerHTML;
+          this.innerHTML = '<i class="fas fa-check"></i> Ditambahkan!';
+          this.classList.add("added");
+          this.disabled = true;
+
+          setTimeout(() => {
+            this.innerHTML =
+              '<i class="fas fa-shopping-cart"></i> Dalam Keranjang';
+            this.classList.remove("added");
+            this.disabled = false;
+          }, 1500);
+        }
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+      }
+    });
+  });
+}
+
 function initializeProductsPage() {
   updateProductsDisplay();
   setupEventListeners();
+  setupProductCardEvents();
   console.log("✅ Products page initialized");
 }
 

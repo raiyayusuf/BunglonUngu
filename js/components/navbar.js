@@ -1,3 +1,5 @@
+import { toggleCartSidebar } from "./cart-sidebar.js";
+
 export function updateNavActive(activeHash) {
   console.log(`🎯 Updating nav active for: ${activeHash}`);
 
@@ -119,11 +121,15 @@ function setupNavbarEvents() {
   // Cart button click
   const cartBtn = document.getElementById("cart-btn");
   if (cartBtn) {
-    cartBtn.addEventListener("click", () => {
-      console.log("Cart button clicked - will open sidebar later");
-      // Nanti ini akan buka cart sidebar
-      alert("Cart functionality coming soon!");
-    });
+    cartBtn.removeEventListener("click", handleCartClick);
+    cartBtn.addEventListener("click", handleCartClick);
+  }
+
+  function handleCartClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("🛒 Cart button clicked");
+    toggleCartSidebar();
   }
 
   // Theme toggle (dark/light mode)
