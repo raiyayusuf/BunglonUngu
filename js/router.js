@@ -5,6 +5,7 @@ import { loadCartPage } from "./views/cart.js";
 import { loadProductDetailPage } from "./views/product-detail.js";
 import { updateNavActive } from "./components/navbar.js";
 import { loadContactPage } from "./views/contact.js";
+import { loadCategoriesPage } from "./views/categories.js";
 
 // config router
 const routes = {
@@ -73,16 +74,6 @@ export function router() {
 
 export function navigateTo(hash) {
   window.location.hash = hash;
-}
-
-function loadCategoriesPage() {
-  const app = document.getElementById("app");
-  app.innerHTML = `    
-    <div class="page-container">
-      <h1>Kategori Produk</h1>
-      <p>Halaman kategori sedang dalam pengembangan...</p>
-    </div>
-  `;
 }
 
 function loadNotFoundPage() {

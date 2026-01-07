@@ -18,6 +18,29 @@ import {
 
 import { renderProductCards } from "../components/product-card.js";
 
+function getQueryParams() {
+  const params = {};
+  const hash = window.location.hash;
+
+  // Cari bagian setelah ?
+  const queryIndex = hash.indexOf("?");
+  if (queryIndex === -1) return params;
+
+  const queryString = hash.substring(queryIndex + 1);
+
+  if (queryString) {
+    queryString.split("&").forEach((pair) => {
+      const [key, value] = pair.split("=");
+      if (key && value) {
+        params[key] = decodeURIComponent(value);
+      }
+    });
+  }
+
+  console.log("📦 Query params from URL:", params);
+  return params;
+}
+
 let currentFilters = {
   category: [],
   flowerType: [],
@@ -34,6 +57,41 @@ let filteredProducts = [...products];
 
 export function loadProductsPage() {
   console.log("🌷 Loading products page...");
+
+  const queryParams = getQueryParams();
+
+  // Reset filters dulu
+  currentFilters = {
+    category: [],
+    flowerType: [],
+    priceRange: null,
+    colors: [],
+    tags: [],
+    featuredOnly: false,
+    inStockOnly: true,
+    searchKeyword: "",
+  };
+
+  // Apply query parameters jika ada
+  if (queryParams.category) {
+    currentFilters.category = [queryParams.category];
+    console.log(`🔍 Filtering by category: ${queryParams.category}`);
+  }
+  if (queryParams.flowerType) {
+    currentFilters.flowerType = [queryParams.flowerType];
+    console.log(`🔍 Filtering by flower type: ${queryParams.flowerType}`);
+  }
+  if (queryParams.priceRange) {
+    const range = priceRanges.find((r) => r.id === queryParams.priceRange);
+    if (range) {
+      currentFilters.priceRange = range;
+      console.log(`🔍 Filtering by price range: ${range.name}`);
+    }
+  }
+  if (queryParams.featured === "true") {
+    currentFilters.featuredOnly = true;
+    console.log(`🔍 Filtering by featured only`);
+  }
 
   const app = document.getElementById("app");
 

@@ -175,11 +175,17 @@ export function loadContactPage() {
             </div>
             
             <div class="developer-note">
-              <p>
-                <i class="fas fa-lightbulb"></i>
-                Ingin kolaborasi project web development? 
-                <a href="${contactData.socialLinks.email}">Hubungi saya!</a>
-              </p>
+              <div class="collaboration-container">
+                <i class="fas fa-lightbulb collaboration-icon"></i>
+                <div class="collaboration-content">
+                  <p class="collab-question">Ingin kolaborasi project web development?</p>
+                  <a href="${
+                    contactData.socialLinks.email
+                  }" class="collab-action">
+                    Hubungi saya!
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
