@@ -60,6 +60,8 @@ export function loadProductsPage() {
 
   const queryParams = getQueryParams();
 
+  const savedFilter = sessionStorage.getItem("categoryFilter");
+
   // Reset filters dulu
   currentFilters = {
     category: [],
@@ -72,25 +74,66 @@ export function loadProductsPage() {
     searchKeyword: "",
   };
 
-  // Apply query parameters jika ada
   if (queryParams.category) {
     currentFilters.category = [queryParams.category];
-    console.log(`🔍 Filtering by category: ${queryParams.category}`);
+    console.log(`🔍 Filtering by URL category: ${queryParams.category}`);
   }
   if (queryParams.flowerType) {
     currentFilters.flowerType = [queryParams.flowerType];
-    console.log(`🔍 Filtering by flower type: ${queryParams.flowerType}`);
+    console.log(`🔍 Filtering by URL flower type: ${queryParams.flowerType}`);
   }
   if (queryParams.priceRange) {
     const range = priceRanges.find((r) => r.id === queryParams.priceRange);
     if (range) {
       currentFilters.priceRange = range;
-      console.log(`🔍 Filtering by price range: ${range.name}`);
+      console.log(`🔍 Filtering by URL price range: ${range.name}`);
     }
   }
   if (queryParams.featured === "true") {
     currentFilters.featuredOnly = true;
-    console.log(`🔍 Filtering by featured only`);
+    console.log(`🔍 Filtering by URL featured only`);
+  }
+
+  // Priority 2: SessionStorage (jika gak ada dari URL)
+  if (savedFilter && Object.keys(queryParams).length === 0) {
+    try {
+      const filter = JSON.parse(savedFilter);
+      console.log("🔍 Applying saved filter from sessionStorage:", filter);
+
+      switch (filter.type) {
+        case "category":
+          currentFilters.category = [filter.value];
+          console.log(`✅ Set category filter: ${filter.value}`);
+          break;
+
+        case "flowerType":
+          currentFilters.flowerType = [filter.value];
+          console.log(`✅ Set flower type filter: ${filter.value}`);
+          break;
+
+        case "priceRange":
+          const range = priceRanges.find((r) => r.id === filter.value);
+          if (range) {
+            currentFilters.priceRange = range;
+            console.log(`✅ Set price range filter: ${range.name}`);
+          }
+          break;
+
+        case "featured":
+          currentFilters.featuredOnly = true;
+          console.log(`✅ Set featured filter`);
+          break;
+      }
+    } catch (error) {
+      console.error("❌ Error parsing saved filter:", error);
+    }
+  }
+  // ========== END FILTER CHECK ==========
+
+  // Clear sessionStorage setelah dipakai
+  if (savedFilter) {
+    sessionStorage.removeItem("categoryFilter");
+    console.log("🧹 Cleared saved filter from sessionStorage");
   }
 
   const app = document.getElementById("app");
@@ -114,10 +157,37 @@ export function loadProductsPage() {
 }
 
 function renderHeader() {
+  let title = "🌷 Semua Produk Bunga";
+  let subtitle =
+    "Temukan bunga terbaik untuk setiap momen spesial dalam hidup Anda";
+
+  // Cek filter yang aktif
+  if (currentFilters.category.length > 0) {
+    const cat = categories.find((c) => c.id === currentFilters.category[0]);
+    if (cat) {
+      title = `${cat.icon} Produk ${cat.name}`;
+      subtitle = `Koleksi ${cat.description || cat.name} terbaik kami`;
+    }
+  } else if (currentFilters.flowerType.length > 0) {
+    const flower = flowerTypes.find(
+      (f) => f.id === currentFilters.flowerType[0]
+    );
+    if (flower) {
+      title = `${flower.icon} Bunga ${flower.name}`;
+      subtitle = `Koleksi bunga ${flower.name} pilihan terbaik`;
+    }
+  } else if (currentFilters.priceRange) {
+    title = `💰 ${currentFilters.priceRange.name}`;
+    subtitle = `Produk bunga dengan harga ${currentFilters.priceRange.name.toLowerCase()}`;
+  } else if (currentFilters.featuredOnly) {
+    title = "⭐ Produk Unggulan";
+    subtitle = "Koleksi bunga pilihan terbaik kami";
+  }
+
   return `
     <div class="page-header">
-      <h1>🌷 Semua Produk Bunga</h1>
-      <p>Temukan bunga terbaik untuk setiap momen spesial dalam hidup Anda</p>
+      <h1>${title}</h1>
+      <p>${subtitle}</p>
     </div>
   `;
 }

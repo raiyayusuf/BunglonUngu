@@ -3,7 +3,7 @@
   position: fixed;
   top: 0;
   right: -400px;
-  width: 380px;
+  width: 400px;
   max-width: 90vw;
   height: 100vh;
   background: white;
@@ -12,7 +12,7 @@
   transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 aside.cart-sidebar.active,

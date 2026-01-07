@@ -31,69 +31,174 @@ export function renderNavbar() {
       <!-- Brand / Logo -->
       <div class="nav-brand">
         <span class="logo">🌸</span>
-        <h1>Bakule <span class="highlight">Kembang</span></h1>
-        <small class="tagline">Florist Yogyakarta</small>
+        <div class="brand-text">
+          <h1>Bakule <span class="highlight">Kembang</span></h1>
+          <small class="tagline">Florist Yogyakarta</small>
+        </div>
       </div>
 
       <!-- Navigation Menu -->
       <ul class="nav-menu" id="nav-menu">
-        <li class="nav-item">
-          <a href="#home" class="nav-link active" data-page="home">
-            <i class="fas fa-home"></i>
-            <span class="nav-text">Home</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#products" class="nav-link" data-page="products">
-            <i class="fas fa-store"></i>
-            <span class="nav-text">Produk</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#categories" class="nav-link" data-page="categories">
-            <i class="fas fa-list"></i>
-            <span class="nav-text">Kategori</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#about" class="nav-link" data-page="about">
-            <i class="fas fa-info-circle"></i>
-            <span class="nav-text">Tentang</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#contact" class="nav-link" data-page="contact">
-            <i class="fas fa-phone"></i>
-            <span class="nav-text">Kontak</span>
-          </a>
-        </li>
+        <li><a href="#home" class="nav-link"><span class="nav-text">Home</span></a></li>
+        <li><a href="#products" class="nav-link"><span class="nav-text">Produk</span></a></li>
+        <li><a href="#categories" class="nav-link"><span class="nav-text">Kategori</span></a></li>
+        <li><a href="#about" class="nav-link"><span class="nav-text">Tentang</span></a></li>
+        <li><a href="#contact" class="nav-link"><span class="nav-text">Kontak</span></a></li>
       </ul>
 
       <!-- Cart & Actions -->
       <div class="nav-actions">
+        <!-- Scrolled Hamburger (for desktop scroll) -->
+        <button class="scrolled-hamburger" id="scrolled-hamburger" aria-label="Open menu">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+
         <button class="cart-btn" id="cart-btn" aria-label="Open cart">
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-text">Cart</span>
           <span class="cart-count" id="cart-count">0</span>
         </button>
 
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toogle theme">
-          <i class="fas fa-moon"></i>
-        </button>
-
+        <!-- Mobile Menu Toggle -->
         <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
           <i class="fas fa-bars"></i>
         </button>
       </div>
     </div>
-
   `;
   // event listeners after rendering
   setupNavbarEvents();
+  setupScrollEffect();
+  setupScrolledHamburgerDropdown();
+
+  window.addEventListener("cartUpdated", () => {
+    updateCartCountFromStorage();
+  });
+}
+
+function setupScrollEffect() {
+  const navbar = document.getElementById("navbar");
+
+  if (!navbar) return;
+
+  function handleScroll() {
+    if (window.scrollY > 100) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+  }
+
+  window.addEventListener("scroll", handleScroll);
+
+  // Initial check
+  handleScroll();
+}
+
+function setupScrolledHamburgerDropdown() {
+  const hamburger = document.getElementById("scrolled-hamburger");
+  const dropdownId = "scrolled-dropdown";
+
+  if (!hamburger) return;
+
+  // Create dropdown jika belum ada
+  if (!document.getElementById(dropdownId)) {
+    createScrolledDropdown(dropdownId);
+  }
+
+  // Toggle dropdown on click
+  hamburger.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const dropdown = document.getElementById(dropdownId);
+    const isActive = dropdown.classList.contains("active");
+
+    // Toggle dropdown
+    dropdown.classList.toggle("active");
+    hamburger.classList.toggle("active");
+
+    // Close other dropdowns jika ada
+    if (!isActive) {
+      closeAllDropdownsExcept(dropdownId);
+    }
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    const dropdown = document.getElementById(dropdownId);
+    if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
+      dropdown.classList.remove("active");
+      hamburger.classList.remove("active");
+    }
+  });
+}
+
+function createScrolledDropdown(id) {
+  const navActions = document.querySelector(".nav-actions");
+  if (!navActions) return;
+
+  const dropdown = document.createElement("div");
+  dropdown.id = id;
+  dropdown.className = "scrolled-dropdown";
+
+  dropdown.innerHTML = /*html*/ `
+    <ul class="scrolled-dropdown-menu">
+      <li><a href="#home" class="scrolled-dropdown-link"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="#products" class="scrolled-dropdown-link"><i class="fas fa-store"></i> Produk</a></li>
+      <li><a href="#categories" class="scrolled-dropdown-link"><i class="fas fa-list"></i> Kategori</a></li>
+      <li><a href="#about" class="scrolled-dropdown-link"><i class="fas fa-info-circle"></i> Tentang</a></li>
+      <li><a href="#contact" class="scrolled-dropdown-link"><i class="fas fa-phone"></i> Kontak</a></li>
+    </ul>
+  `;
+
+  navActions.appendChild(dropdown);
+
+  // Close dropdown when clicking a link
+  dropdown.querySelectorAll(".scrolled-dropdown-link").forEach((link) => {
+    link.addEventListener("click", () => {
+      dropdown.classList.remove("active");
+      document.getElementById("scrolled-hamburger").classList.remove("active");
+    });
+  });
+
+  return dropdown;
+}
+
+function closeAllDropdownsExcept(exceptId) {
+  document.querySelectorAll(".scrolled-dropdown").forEach((dropdown) => {
+    if (dropdown.id !== exceptId) {
+      dropdown.classList.remove("active");
+    }
+  });
+
+  // Juga remove active dari hamburger buttons
+  document.querySelectorAll(".scrolled-hamburger").forEach((btn) => {
+    if (btn.id !== `scrolled-hamburger`) {
+      btn.classList.remove("active");
+    }
+  });
+}
+
+function updateCartCountFromStorage() {
+  const cartCount = document.getElementById("cart-count");
+  if (cartCount) {
+    const cart =
+      JSON.parse(localStorage.getItem("bakule_kembang_cart_v1")) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+    cartCount.style.display = totalItems > 0 ? "flex" : "none";
+
+    // Add animation
+    cartCount.classList.add("pulse");
+    setTimeout(() => {
+      cartCount.classList.remove("pulse");
+    }, 300);
+  }
 }
 
 function setupNavbarEvents() {

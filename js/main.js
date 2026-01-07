@@ -55,20 +55,42 @@ function initApp() {
   document.body.appendChild(cartSidebar);
   console.log("🛒 Cart sidebar rendered");
 
-  // 4. Setup router event listeners
+  // 🔥 4. CRITICAL FIX: Initialize cart badge on app start
+  initializeCartBadge();
+
+  // 5. Setup router event listeners
   setupRouter();
 
-  // 5. Hide loading immediately
+  // 6. Hide loading immediately
   const loading = document.getElementById("loading");
   if (loading) {
     loading.style.display = "none";
   }
 
-  // 6. CALL ROUTER FOR INITIAL PAGE - ini yang penting!
+  // 7. CALL ROUTER FOR INITIAL PAGE
   console.log("📍 Initial route check...");
-  router(); // ← PANGGIL ROUTER() LANGSUNG!
+  router();
 
   console.log("✅ Application started");
+}
+
+// 🔥 NEW FUNCTION: Initialize cart badge from localStorage
+function initializeCartBadge() {
+  console.log("🛒 Initializing cart badge from localStorage...");
+
+  // Trigger cartUpdated event to refresh all UI components
+  window.dispatchEvent(new CustomEvent("cartUpdated"));
+
+  // Alternatively, directly update the count if needed
+  const cartCount = document.getElementById("cart-count");
+  if (cartCount) {
+    const cart =
+      JSON.parse(localStorage.getItem("bakule_kembang_cart_v1")) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+    cartCount.style.display = totalItems > 0 ? "flex" : "none";
+    console.log(`🛒 Cart badge initialized with ${totalItems} items`);
+  }
 }
 
 function setupRouter() {

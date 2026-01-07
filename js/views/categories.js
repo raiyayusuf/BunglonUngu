@@ -122,40 +122,107 @@ export function loadCategoriesPage() {
 }
 
 function initializeCategoriesPage() {
-  // Click handlers untuk kategori
-  document.querySelectorAll(".category-card .view-btn").forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const card = this.closest(".category-card");
+  console.log("🔧 Initializing categories page...");
 
+  // Click handlers untuk kategori
+  document.querySelectorAll(".view-btn").forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      console.log("🖱️ Button clicked:", this);
+
+      const card = this.closest(".category-card");
+      if (!card) {
+        console.error("❌ No card found for button");
+        return;
+      }
+
+      let filterType = "";
+      let filterValue = "";
+      let filterLabel = "";
+
+      // Cek tipe kategori
       if (card.dataset.category) {
-        // Packaging category
-        navigateTo(`#products?category=${card.dataset.category}`);
+        filterType = "category";
+        filterValue = card.dataset.category;
+        const cat = categories.find((c) => c.id === filterValue);
+        filterLabel = cat?.name || filterValue;
       } else if (card.dataset.flower) {
-        // Flower type
-        navigateTo(`#products?flowerType=${card.dataset.flower}`);
+        filterType = "flowerType";
+        filterValue = card.dataset.flower;
+        const flower = flowerTypes.find((f) => f.id === filterValue);
+        filterLabel = flower?.name || filterValue;
       } else if (card.dataset.price) {
-        // Price range
-        navigateTo(`#products?priceRange=${card.dataset.price}`);
+        filterType = "priceRange";
+        filterValue = card.dataset.price;
+        const range = priceRanges.find((r) => r.id === filterValue);
+        filterLabel = range?.name || filterValue;
+      }
+
+      console.log(
+        `🎯 Filter to apply: ${filterType} = ${filterValue} (${filterLabel})`
+      );
+
+      if (filterType && filterValue) {
+        // Simpan filter ke sessionStorage
+        const filterData = {
+          type: filterType,
+          value: filterValue,
+          label: filterLabel,
+          timestamp: Date.now(),
+        };
+
+        sessionStorage.setItem("categoryFilter", JSON.stringify(filterData));
+        console.log("💾 Saved filter to sessionStorage:", filterData);
+
+        // Navigate ke products page
+        window.location.hash = "#products";
+      } else {
+        console.error("❌ Could not determine filter type");
       }
     });
   });
 
-  // Quick links
-  document.getElementById("all-products").addEventListener("click", () => {
-    navigateTo("#products");
-  });
+  // Quick links - All Products
+  const allProductsBtn = document.getElementById("all-products");
+  if (allProductsBtn) {
+    allProductsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("🌐 Navigating to all products");
+      sessionStorage.removeItem("categoryFilter");
+      window.location.hash = "#products";
+    });
+  }
 
-  document.getElementById("featured-products").addEventListener("click", () => {
-    navigateTo("#products?featured=true");
-  });
+  // Quick links - Featured Products
+  const featuredBtn = document.getElementById("featured-products");
+  if (featuredBtn) {
+    featuredBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("⭐ Navigating to featured products");
+      const filterData = {
+        type: "featured",
+        value: true,
+        label: "Produk Unggulan",
+        timestamp: Date.now(),
+      };
+      sessionStorage.setItem("categoryFilter", JSON.stringify(filterData));
+      window.location.hash = "#products";
+    });
+  }
 
-  // Hover effects
+  // Make whole card clickable (optional)
   document.querySelectorAll(".category-card").forEach((card) => {
-    card.addEventListener("click", function () {
+    card.addEventListener("click", function (e) {
+      // Jangan trigger kalau klik tombol
+      if (e.target.closest(".view-btn") || e.target.tagName === "BUTTON") {
+        return;
+      }
       const btn = this.querySelector(".view-btn");
       if (btn) btn.click();
     });
   });
 
-  console.log("✅ Categories page loaded");
+  console.log("✅ Categories page event listeners setup complete");
 }
