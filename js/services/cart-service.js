@@ -150,3 +150,25 @@ export function formatPrice(price) {
 
 // Initial update
 updateCartUI();
+
+export function removeMultipleFromCart(productIds) {
+  const initialLength = cart.length;
+  cart = cart.filter((item) => !productIds.includes(item.id));
+
+  if (cart.length < initialLength) {
+    saveCart();
+    debouncedUpdateCartUI();
+    return true;
+  }
+  return false;
+}
+
+export function getSelectedItemsTotal(selectedIds) {
+  return cart
+    .filter((item) => selectedIds.includes(item.id))
+    .reduce((total, item) => total + item.price * item.quantity, 0);
+}
+
+export function getCartItemsByIds(ids) {
+  return cart.filter((item) => ids.includes(item.id));
+}

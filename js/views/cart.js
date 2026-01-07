@@ -1,3 +1,4 @@
+// js/views/cart.js
 import { deleteModal } from "../components/modal.js";
 console.log("🔄 Modal imported:", deleteModal);
 
@@ -8,6 +9,7 @@ import {
   updateQuantity,
   clearCart,
   formatPrice,
+  removeMultipleFromCart, // 🔥 TAMBAH INI UNTUK BULK DELETE
 } from "../services/cart-service.js";
 import { navigateTo } from "../router.js";
 
@@ -110,7 +112,13 @@ function renderCartContent(items, total) {
     <div class="cart-content">
       <div class="cart-items-section">
         <div class="section-header">
-          <h3>Produk dalam Keranjang (${items.length} item)</h3>
+          <div class="select-all-container">
+            <label class="cart-checkbox">
+              <input type="checkbox" id="select-all-checkbox">
+              <span class="checkmark"></span>
+              Pilih Semua
+            </label>
+          </div>
           <button class="btn btn-text" id="clear-cart">
             <i class="fas fa-trash"></i> Kosongkan Keranjang
           </button>
@@ -122,49 +130,74 @@ function renderCartContent(items, total) {
       </div>
       
       <div class="cart-summary-section">
-        <div class="summary-card">
-          <h3>Ringkasan Belanja</h3>
-          
-          <div class="summary-details">
-            <div class="summary-row">
-              <span>Subtotal (${items.reduce(
-                (sum, item) => sum + item.quantity,
-                0
-              )} produk)</span>
-              <span>${formatPrice(total)}</span>
-            </div>
-            <div class="summary-row">
-              <span>Pengiriman</span>
-              <span class="free-shipping">Gratis</span>
-            </div>
-            <div class="summary-divider"></div>
-            <div class="summary-row total">
-              <strong>Total Pembayaran</strong>
-              <strong class="total-price">${formatPrice(total)}</strong>
-            </div>
-          </div>
-          
-          <button class="btn btn-primary btn-block" id="checkout-btn">
-            <i class="fas fa-credit-card"></i> Lanjut ke Checkout
-          </button>
-          
-          <div class="payment-methods">
-            <p class="payment-label">Metode Pembayaran:</p>
-            <div class="payment-icons">
-              <i class="fab fa-cc-visa" title="Visa"></i>
-              <i class="fab fa-cc-mastercard" title="Mastercard"></i>
-              <i class="fab fa-cc-paypal" title="PayPal"></i>
-              <i class="fas fa-university" title="Transfer Bank"></i>
-            </div>
-          </div>
+        ${renderSummaryCard(items, total)}
+      </div>
+    </div>
+    
+    <!-- BULK ACTIONS BAR (Hidden by default) -->
+    <div class="bulk-actions-bar" id="bulk-actions-bar" style="display: none;">
+      <div class="bulk-actions-info">
+        <span id="selected-count">0</span> produk dipilih
+        <span class="bulk-total" id="bulk-total">Rp 0</span>
+      </div>
+      <div class="bulk-actions-buttons">
+        <button class="btn btn-outline" id="bulk-deselect">
+          <i class="fas fa-times"></i> Batalkan
+        </button>
+        <button class="btn btn-danger" id="bulk-delete">
+          <i class="fas fa-trash"></i> Hapus yang Dipilih
+        </button>
+        <button class="btn btn-primary" id="bulk-checkout">
+          <i class="fas fa-shopping-cart"></i> Checkout Selected
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderSummaryCard(items, total) {
+  return `
+    <div class="summary-card">
+      <h3>Ringkasan Belanja</h3>
+      
+      <div class="summary-details">
+        <div class="summary-row">
+          <span>Subtotal (${items.reduce(
+            (sum, item) => sum + item.quantity,
+            0
+          )} produk)</span>
+          <span>${formatPrice(total)}</span>
         </div>
-        
-        <div class="cart-actions-mobile">
-          <button class="btn btn-primary btn-block" id="checkout-mobile">
-            <i class="fas fa-credit-card"></i> Checkout ${formatPrice(total)}
-          </button>
+        <div class="summary-row">
+          <span>Pengiriman</span>
+          <span class="free-shipping">Gratis</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row total">
+          <strong>Total Pembayaran</strong>
+          <strong class="total-price">${formatPrice(total)}</strong>
         </div>
       </div>
+      
+      <button class="btn btn-primary btn-block" id="checkout-btn">
+        <i class="fas fa-credit-card"></i> Lanjut ke Checkout
+      </button>
+      
+      <div class="payment-methods">
+        <p class="payment-label">Metode Pembayaran:</p>
+        <div class="payment-icons">
+          <i class="fab fa-cc-visa" title="Visa"></i>
+          <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+          <i class="fab fa-cc-paypal" title="PayPal"></i>
+          <i class="fas fa-university" title="Transfer Bank"></i>
+        </div>
+      </div>
+    </div>
+    
+    <div class="cart-actions-mobile">
+      <button class="btn btn-primary btn-block" id="checkout-mobile">
+        <i class="fas fa-credit-card"></i> Checkout ${formatPrice(total)}
+      </button>
     </div>
   `;
 }
@@ -172,6 +205,14 @@ function renderCartContent(items, total) {
 function renderCartItem(item) {
   return `
     <div class="cart-item-card" data-id="${item.id}">
+      <!-- CHECKBOX BARU DI SINI -->
+      <div class="cart-item-checkbox">
+        <label class="cart-checkbox">
+          <input type="checkbox" class="item-checkbox" data-id="${item.id}">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      
       <div class="cart-item-image">
         <img src="${item.image}" alt="${item.name}" loading="lazy">
       </div>
@@ -350,6 +391,12 @@ export function initializeCartPage() {
   if (checkoutBtn) checkoutBtn.addEventListener("click", checkoutHandler);
   if (checkoutMobile) checkoutMobile.addEventListener("click", checkoutHandler);
 
+  // ===== SETUP BULK ACTIONS =====
+  setTimeout(() => {
+    setupBulkActions();
+    console.log("✅ Bulk actions initialized");
+  }, 100);
+
   // FLAG AS INITIALIZED
   cartPageInitialized = true;
 
@@ -366,6 +413,146 @@ function refreshCartPage() {
       loadCartPage();
     }, 50);
   }
+}
+
+// ===== BULK ACTIONS LOGIC =====
+function setupBulkActions() {
+  const container = document.getElementById("cart-page-container");
+  if (!container) return;
+
+  // 1. CHECKBOX CHANGE HANDLER
+  container.addEventListener("change", function (e) {
+    if (
+      e.target.classList.contains("item-checkbox") ||
+      e.target.id === "select-all-checkbox"
+    ) {
+      updateBulkActionsUI();
+    }
+  });
+
+  // 2. SELECT ALL CHECKBOX
+  const selectAllCheckbox = document.getElementById("select-all-checkbox");
+  if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener("change", function (e) {
+      const itemCheckboxes = document.querySelectorAll(".item-checkbox");
+      const isChecked = e.target.checked;
+
+      itemCheckboxes.forEach((checkbox) => {
+        checkbox.checked = isChecked;
+      });
+
+      updateBulkActionsUI();
+    });
+  }
+
+  // 3. BULK DESELECT BUTTON
+  const bulkDeselectBtn = document.getElementById("bulk-deselect");
+  if (bulkDeselectBtn) {
+    bulkDeselectBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Uncheck semua checkbox
+      document.querySelectorAll(".item-checkbox").forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+
+      const selectAll = document.getElementById("select-all-checkbox");
+      if (selectAll) selectAll.checked = false;
+
+      updateBulkActionsUI();
+    });
+  }
+
+  // 4. BULK DELETE BUTTON
+  const bulkDeleteBtn = document.getElementById("bulk-delete");
+  if (bulkDeleteBtn) {
+    bulkDeleteBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const selectedIds = getSelectedItemIds();
+      if (selectedIds.length === 0) return;
+
+      // PAKAI MODAL YANG UDAH ADA
+      deleteModal.open(() => {
+        // ✅ FIXED: Langsung pake fungsi yang udah di-import
+        removeMultipleFromCart(selectedIds);
+        refreshCartPage();
+      }, `Hapus ${selectedIds.length} produk dari keranjang?`);
+    });
+  }
+
+  // 5. BULK CHECKOUT BUTTON
+  const bulkCheckoutBtn = document.getElementById("bulk-checkout");
+  if (bulkCheckoutBtn) {
+    bulkCheckoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const selectedIds = getSelectedItemIds();
+      if (selectedIds.length === 0) return;
+
+      // Logika checkout selected items
+      alert(
+        `Checkout ${selectedIds.length} produk yang dipilih! Fitur lanjutan akan segera hadir.`
+      );
+      // TODO: Implement checkout selected items
+    });
+  }
+}
+
+// Helper: Get semua ID yang dipilih
+function getSelectedItemIds() {
+  const checkboxes = document.querySelectorAll(".item-checkbox:checked");
+  return Array.from(checkboxes).map((cb) => parseInt(cb.dataset.id));
+}
+
+// Helper: Update bulk actions UI
+function updateBulkActionsUI() {
+  const selectedIds = getSelectedItemIds();
+  const selectedCount = selectedIds.length;
+  const bulkBar = document.getElementById("bulk-actions-bar");
+
+  if (selectedCount > 0) {
+    // Show bulk actions bar
+    bulkBar.style.display = "flex";
+
+    // Update counter
+    document.getElementById("selected-count").textContent = selectedCount;
+
+    // Calculate total for selected items
+    const selectedTotal = getSelectedItemsTotal(selectedIds);
+    document.getElementById("bulk-total").textContent =
+      formatPrice(selectedTotal);
+
+    // Update select all checkbox state
+    const itemCheckboxes = document.querySelectorAll(".item-checkbox");
+    const allChecked = itemCheckboxes.length === selectedCount;
+    const selectAll = document.getElementById("select-all-checkbox");
+    if (selectAll) {
+      selectAll.checked = allChecked;
+      selectAll.indeterminate = selectedCount > 0 && !allChecked;
+    }
+  } else {
+    // Hide bulk actions bar
+    bulkBar.style.display = "none";
+
+    // Reset select all
+    const selectAll = document.getElementById("select-all-checkbox");
+    if (selectAll) {
+      selectAll.checked = false;
+      selectAll.indeterminate = false;
+    }
+  }
+}
+
+// Helper: Get total for selected items
+function getSelectedItemsTotal(selectedIds) {
+  const items = getCart();
+  return items
+    .filter((item) => selectedIds.includes(item.id))
+    .reduce((total, item) => total + item.price * item.quantity, 0);
 }
 
 // Export untuk external refresh

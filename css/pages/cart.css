@@ -14,3 +14,198 @@
 .cart-count.show {
   display: flex;
 }
+
+.select-all-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Custom checkbox styling */
+.cart-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.cart-checkbox input[type="checkbox"] {
+  display: none; /* Sembunyikan default checkbox */
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.cart-checkbox input:checked ~ .checkmark {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.cart-checkbox input:checked ~ .checkmark::after {
+  content: "✓";
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.cart-checkbox input:indeterminate ~ .checkmark {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.cart-checkbox input:indeterminate ~ .checkmark::after {
+  content: "—";
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Checkbox di cart item */
+.cart-item-checkbox {
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 0.5rem;
+}
+
+/* Update cart item card layout untuk accommodate checkbox */
+.cart-item-card {
+  display: grid;
+  grid-template-columns: 40px 100px 1fr auto;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px var(--shadow);
+  transition: all 0.3s;
+}
+
+@media (max-width: 768px) {
+  .cart-item-card {
+    grid-template-columns: 40px 80px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .cart-item-subtotal {
+    grid-column: 3;
+    grid-row: 2;
+    text-align: left;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+  }
+}
+
+/* Bulk Actions Bar */
+.bulk-actions-bar {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  z-index: 1000;
+  min-width: 500px;
+  max-width: 90%;
+  animation: slideUp 0.3s ease-out;
+}
+
+.bulk-actions-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.bulk-actions-info #selected-count {
+  background: var(--primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.bulk-total {
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.bulk-actions-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.bulk-actions-bar .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.bulk-actions-bar .btn-danger {
+  background: #ff4757;
+  color: white;
+  border: none;
+}
+
+.bulk-actions-bar .btn-danger:hover {
+  background: #ff2e43;
+}
+
+/* Animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bulk-actions-bar {
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 15px;
+    padding: 1rem;
+    min-width: auto;
+    width: 90%;
+  }
+
+  .bulk-actions-info {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .bulk-actions-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .bulk-actions-bar .btn {
+    flex: 1;
+    text-align: center;
+  }
+}
