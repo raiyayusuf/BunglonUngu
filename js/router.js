@@ -26,6 +26,12 @@ export function router() {
   const hash = window.location.hash || "#home";
   console.log(`Rounting to: ${hash}`);
 
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth", // atau 'smooth' kalo mau animasi
+  });
+
   app.innerHTML =
     '<div class="page-loading">Loading...<div class="spinner">🌸</div><p>Loading...</p></div>';
   const [baseRoute, param] = hash.split("/");

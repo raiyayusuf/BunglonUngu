@@ -1,3 +1,6 @@
+import { deleteModal } from "../components/modal.js";
+console.log("🔄 Modal imported:", deleteModal);
+
 import {
   getCart,
   getCartTotal,
@@ -267,10 +270,10 @@ export function initializeCartPage() {
           updateQuantity(productId, item.quantity - 1);
           refreshCartPage();
         } else {
-          if (confirm("Hapus produk dari keranjang?")) {
+          deleteModal.open(() => {
             removeFromCart(productId);
             refreshCartPage();
-          }
+          });
         }
         break;
 
@@ -280,10 +283,10 @@ export function initializeCartPage() {
         break;
 
       case "remove":
-        if (confirm("Hapus produk dari keranjang?")) {
+        deleteModal.open(() => {
           removeFromCart(productId);
           refreshCartPage();
-        }
+        });
         break;
     }
   };
@@ -320,10 +323,10 @@ export function initializeCartPage() {
     clearBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopImmediatePropagation();
-      if (confirm("Apakah Anda yakin ingin mengosongkan keranjang?")) {
+      deleteModal.open(() => {
         clearCart();
         refreshCartPage();
-      }
+      });
     });
   }
 

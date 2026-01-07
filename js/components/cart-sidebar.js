@@ -1,3 +1,5 @@
+import { deleteModal } from "../components/modal.js";
+
 import {
   getCart,
   getCartTotal,
@@ -242,9 +244,9 @@ function attachSidebarEvents(container) {
         if (item.quantity > 1) {
           updateQuantity(productId, item.quantity - 1);
         } else {
-          if (confirm("Hapus produk dari keranjang?")) {
+          deleteModal.open(() => {
             removeFromCart(productId);
-          }
+          });
         }
         break;
 
@@ -253,9 +255,19 @@ function attachSidebarEvents(container) {
         break;
 
       case "remove":
-        if (confirm("Hapus produk dari keranjang?")) {
-          removeFromCart(productId);
+        console.log("🔄 Opening delete modal...");
+        console.log("Modal instance:", deleteModal);
+        console.log("Modal initialized:", deleteModal.isInitialized);
+
+        // Force re-init jika perlu
+        if (!deleteModal.isInitialized) {
+          deleteModal.init();
         }
+
+        deleteModal.open(() => {
+          console.log("✅ Delete callback executed!");
+          removeFromCart(productId);
+        }, "Hapus produk ini dari keranjang?");
         break;
     }
   };

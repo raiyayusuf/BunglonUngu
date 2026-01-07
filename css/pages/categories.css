@@ -58,6 +58,9 @@
   transition: all 0.3s ease;
   cursor: pointer;
   border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
 }
 
 .category-card:hover {
@@ -103,7 +106,15 @@
   font-weight: 500;
 }
 
+.category-card > *:not(.btn) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Pusatkan konten secara vertikal */
+}
+
 .category-card .btn {
+  margin-top: auto;
   width: 100%;
   justify-content: center;
 }
@@ -114,7 +125,7 @@
 }
 
 .price-range {
-  margin: 1rem 0;
+  margin: auto 0;
 }
 
 .price-bar {
