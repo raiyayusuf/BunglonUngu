@@ -669,11 +669,320 @@ class TermsModal {
 // Create instance
 const termsModal = new TermsModal();
 
+class SuccessModal {
+  constructor() {
+    this.modalId = "successModal";
+    this.modalHTML = `
+      <div class="modal-overlay" id="${this.modalId}">
+        <div class="modal-container success-modal">
+          <button class="modal-close-btn" id="success-modal-close-btn" aria-label="Tutup">
+            &times;
+          </button>
+          
+          <div class="modal-content">
+            <!-- ICON BESAR -->
+            <div class="success-icon-large">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <!-- JUDUL -->
+            <h2 class="success-title">🎉 Order Berhasil!</h2>
+            
+            <!-- PESAN -->
+            <p class="success-message">
+              Terima kasih telah berbelanja di Bakule Kembang!<br>
+              Bunga indah Anda sedang dipersiapkan.
+            </p>
+            
+            <!-- DETAIL ORDER -->
+            <div class="order-details">
+              <div class="detail-item">
+                <i class="fas fa-receipt"></i>
+                <div>
+                  <span class="detail-label">No. Order:</span>
+                  <span class="detail-value" id="success-order-id">ORD-1767856557315-245</span>
+                </div>
+              </div>
+              
+              <div class="detail-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <div>
+                  <span class="detail-label">Total Pembayaran:</span>
+                  <span class="detail-value" id="success-order-total">Rp 785.000</span>
+                </div>
+              </div>
+              
+              <div class="detail-item">
+                <i class="fas fa-shipping-fast"></i>
+                <div>
+                  <span class="detail-label">Estimasi Pengiriman:</span>
+                  <span class="detail-value" id="success-shipping-estimate">3-5 hari kerja</span>
+                </div>
+              </div>
+              
+              <div class="detail-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                  <span class="detail-label">Konfirmasi:</span>
+                  <span class="detail-value" id="success-email-notice">Telah dikirim ke email</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- TOMBOL AKSI -->
+            <div class="success-actions">
+              <button class="modal-btn secondary" id="success-continue-btn">
+                <i class="fas fa-shopping-cart"></i> Lanjut Belanja
+              </button>
+              <button class="modal-btn primary" id="success-home-btn">
+                <i class="fas fa-home"></i> Kembali Ke Beranda
+              </button>
+            </div>
+            
+            <!-- FOOTNOTE -->
+            <p class="success-footnote">
+              <i class="fas fa-headset"></i> Butuh bantuan? 
+              <a href="#contact" class="contact-link">Hubungi Customer Service</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    this.isInitialized = false;
+    this.modal = null;
+    this.eventHandlers = {};
+    this.currentOrderData = null;
+  }
+
+  init() {
+    if (this.isInitialized) {
+      console.log("🔁 SuccessModal already initialized");
+      return;
+    }
+
+    console.log("🔧 SuccessModal initializing...");
+
+    // Clean up old modal
+    const oldModal = document.getElementById(this.modalId);
+    if (oldModal) oldModal.remove();
+
+    // Inject to modal container
+    let modalContainer = document.getElementById("modal-container");
+    if (!modalContainer) {
+      modalContainer = document.createElement("div");
+      modalContainer.id = "modal-container";
+      document.body.appendChild(modalContainer);
+    }
+
+    // Add modal HTML
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = this.modalHTML;
+    modalContainer.appendChild(tempDiv.firstElementChild);
+
+    // Get elements
+    this.modal = document.getElementById(this.modalId);
+    this.closeBtn = document.getElementById("success-modal-close-btn");
+    this.continueBtn = document.getElementById("success-continue-btn");
+    this.homeBtn = document.getElementById("success-home-btn");
+    this.orderIdEl = document.getElementById("success-order-id");
+    this.orderTotalEl = document.getElementById("success-order-total");
+    this.shippingEstimateEl = document.getElementById(
+      "success-shipping-estimate"
+    );
+    this.emailNoticeEl = document.getElementById("success-email-notice");
+
+    if (!this.modal) {
+      console.error("❌ SuccessModal elements not found!");
+      return;
+    }
+
+    this.setupEvents();
+    this.isInitialized = true;
+    console.log("✅ SuccessModal initialized");
+  }
+
+  setupEvents() {
+    this.cleanupEvents();
+
+    // Overlay click to close
+    this.eventHandlers.overlayClick = (e) => {
+      if (e.target === this.modal) this.close();
+    };
+    this.modal.addEventListener("click", this.eventHandlers.overlayClick);
+
+    // Close button
+    this.eventHandlers.closeClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.close();
+      this.navigateToHome();
+    };
+
+    if (this.closeBtn) {
+      this.closeBtn.addEventListener("click", this.eventHandlers.closeClick);
+      this.closeBtn.style.cursor = "pointer";
+      this.closeBtn.style.pointerEvents = "auto";
+    }
+
+    // Continue shopping button
+    this.eventHandlers.continueClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.close();
+      this.navigateToProducts();
+    };
+
+    if (this.continueBtn) {
+      this.continueBtn.addEventListener(
+        "click",
+        this.eventHandlers.continueClick
+      );
+      this.continueBtn.style.cursor = "pointer";
+      this.continueBtn.style.pointerEvents = "auto";
+    }
+
+    // Home button
+    this.eventHandlers.homeClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.close();
+      this.navigateToHome();
+    };
+
+    if (this.homeBtn) {
+      this.homeBtn.addEventListener("click", this.eventHandlers.homeClick);
+      this.homeBtn.style.cursor = "pointer";
+      this.homeBtn.style.pointerEvents = "auto";
+    }
+
+    // Escape key
+    this.eventHandlers.escapeKey = (e) => {
+      if (e.key === "Escape" && this.modal.classList.contains("active")) {
+        this.close();
+        this.navigateToHome();
+      }
+    };
+    document.addEventListener("keydown", this.eventHandlers.escapeKey);
+
+    console.log("✅ SuccessModal events setup complete");
+  }
+
+  navigateToHome() {
+    if (window.navigateTo) {
+      window.navigateTo("#home");
+    } else {
+      window.location.hash = "#home";
+    }
+  }
+
+  navigateToProducts() {
+    if (window.navigateTo) {
+      window.navigateTo("#products");
+    } else {
+      window.location.hash = "#products";
+    }
+  }
+
+  cleanupEvents() {
+    for (const [event, handler] of Object.entries(this.eventHandlers)) {
+      if (event === "escapeKey") {
+        document.removeEventListener("keydown", handler);
+      } else {
+        this.modal?.removeEventListener(event, handler);
+        this.closeBtn?.removeEventListener("click", handler);
+        this.continueBtn?.removeEventListener("click", handler);
+        this.homeBtn?.removeEventListener("click", handler);
+      }
+    }
+    this.eventHandlers = {};
+  }
+
+  open(orderData) {
+    if (!this.isInitialized) this.init();
+
+    this.currentOrderData = orderData;
+
+    // Update modal content dengan data order
+    if (this.orderIdEl && orderData) {
+      this.orderIdEl.textContent = orderData.orderId;
+    }
+
+    if (this.orderTotalEl && orderData) {
+      // Gunakan formatPrice jika ada, atau format manual
+      if (window.formatPrice) {
+        this.orderTotalEl.textContent = window.formatPrice(orderData.total);
+      } else {
+        this.orderTotalEl.textContent = `Rp ${orderData.total.toLocaleString(
+          "id-ID"
+        )}`;
+      }
+    }
+
+    if (this.shippingEstimateEl) {
+      // Tentukan estimasi berdasarkan shipping method
+      const shippingEstimate = this.getShippingEstimate(orderData?.shipping);
+      this.shippingEstimateEl.textContent = shippingEstimate;
+    }
+
+    if (this.emailNoticeEl && orderData?.customer?.email) {
+      this.emailNoticeEl.textContent = `Telah dikirim ke ${orderData.customer.email}`;
+    }
+
+    if (this.modal) {
+      this.modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+
+      // Focus on home button
+      setTimeout(() => {
+        if (this.homeBtn) {
+          this.homeBtn.focus();
+          this.homeBtn.style.cursor = "pointer";
+          this.homeBtn.style.pointerEvents = "auto";
+        }
+      }, 100);
+    }
+
+    console.log("🟢 SuccessModal opened for order:", orderData?.orderId);
+  }
+
+  getShippingEstimate(shippingMethod) {
+    switch (shippingMethod) {
+      case "express":
+        return "1-2 hari kerja";
+      case "same-day":
+        return "Hari ini (jika order sebelum jam 14:00)";
+      default:
+        return "3-5 hari kerja";
+    }
+  }
+
+  close() {
+    if (this.modal) {
+      this.modal.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  }
+
+  destroy() {
+    this.cleanupEvents();
+    this.modal?.remove();
+    this.isInitialized = false;
+    this.modal = null;
+    this.currentOrderData = null;
+  }
+}
+
+// Create instance
+const successModal = new SuccessModal();
+
 export {
   deleteModal,
   checkoutModal,
   termsModal,
+  successModal,
   Modal,
   CheckoutModal,
   TermsModal,
+  SuccessModal,
 };

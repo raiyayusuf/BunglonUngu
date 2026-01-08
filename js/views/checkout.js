@@ -1,4 +1,8 @@
-import { checkoutModal, termsModal } from "../components/modal.js";
+import {
+  checkoutModal,
+  termsModal,
+  successModal,
+} from "../components/modal.js";
 
 // js/views/checkout.js
 import {
@@ -399,8 +403,7 @@ function handleOrderSubmit(e) {
   localStorage.removeItem("bakule_kembang_selected_items");
 
   // Redirect ke halaman sukses
-  alert(`🎉 Order berhasil! No. Order: ${orderData.orderId}`);
-  navigateTo("#home");
+  successModal.open(orderData);
 }
 
 function validateCheckoutForm() {
