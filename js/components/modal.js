@@ -673,7 +673,7 @@ class SuccessModal {
   constructor() {
     this.modalId = "successModal";
     this.modalHTML = `
-      <div class="modal-overlay" id="${this.modalId}">
+            <div class="modal-overlay" id="${this.modalId}">
         <div class="modal-container success-modal">
           <button class="modal-close-btn" id="success-modal-close-btn" aria-label="Tutup">
             &times;
@@ -729,8 +729,12 @@ class SuccessModal {
               </div>
             </div>
             
-            <!-- TOMBOL AKSI -->
+            <!-- TOMBOL AKSI - UPDATE INI -->
             <div class="success-actions">
+              <!-- TAMBAH TOMBOL BARU -->
+              <button class="modal-btn outline" id="success-detail-btn">
+                <i class="fas fa-file-alt"></i> Lihat Detail
+              </button>
               <button class="modal-btn secondary" id="success-continue-btn">
                 <i class="fas fa-shopping-cart"></i> Lanjut Belanja
               </button>
@@ -780,9 +784,10 @@ class SuccessModal {
     tempDiv.innerHTML = this.modalHTML;
     modalContainer.appendChild(tempDiv.firstElementChild);
 
-    // Get elements
+    // Get elements - TAMBAH INI
     this.modal = document.getElementById(this.modalId);
     this.closeBtn = document.getElementById("success-modal-close-btn");
+    this.detailBtn = document.getElementById("success-detail-btn"); // NEW
     this.continueBtn = document.getElementById("success-continue-btn");
     this.homeBtn = document.getElementById("success-home-btn");
     this.orderIdEl = document.getElementById("success-order-id");
@@ -823,6 +828,20 @@ class SuccessModal {
       this.closeBtn.addEventListener("click", this.eventHandlers.closeClick);
       this.closeBtn.style.cursor = "pointer";
       this.closeBtn.style.pointerEvents = "auto";
+    }
+
+    // NEW: Detail button - Navigate to order detail
+    this.eventHandlers.detailClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.close();
+      this.navigateToOrderDetail();
+    };
+
+    if (this.detailBtn) {
+      this.detailBtn.addEventListener("click", this.eventHandlers.detailClick);
+      this.detailBtn.style.cursor = "pointer";
+      this.detailBtn.style.pointerEvents = "auto";
     }
 
     // Continue shopping button
@@ -884,6 +903,23 @@ class SuccessModal {
     }
   }
 
+  navigateToOrderDetail() {
+    if (this.currentOrderData?.orderId) {
+      // Navigate to order detail page
+      if (window.navigateTo) {
+        window.navigateTo(`#order-detail/${this.currentOrderData.orderId}`);
+      } else {
+        window.location.hash = `#order-detail/${this.currentOrderData.orderId}`;
+      }
+
+      console.log(
+        `📍 Navigating to order detail: ${this.currentOrderData.orderId}`
+      );
+    } else {
+      console.error("❌ Cannot navigate: No order data available");
+    }
+  }
+
   cleanupEvents() {
     for (const [event, handler] of Object.entries(this.eventHandlers)) {
       if (event === "escapeKey") {
@@ -891,6 +927,7 @@ class SuccessModal {
       } else {
         this.modal?.removeEventListener(event, handler);
         this.closeBtn?.removeEventListener("click", handler);
+        this.detailBtn?.removeEventListener("click", handler); // NEW
         this.continueBtn?.removeEventListener("click", handler);
         this.homeBtn?.removeEventListener("click", handler);
       }
@@ -933,12 +970,12 @@ class SuccessModal {
       this.modal.classList.add("active");
       document.body.style.overflow = "hidden";
 
-      // Focus on home button
+      // Focus on DETAIL button (bukan home button)
       setTimeout(() => {
-        if (this.homeBtn) {
-          this.homeBtn.focus();
-          this.homeBtn.style.cursor = "pointer";
-          this.homeBtn.style.pointerEvents = "auto";
+        if (this.detailBtn) {
+          this.detailBtn.focus();
+          this.detailBtn.style.cursor = "pointer";
+          this.detailBtn.style.pointerEvents = "auto";
         }
       }, 100);
     }

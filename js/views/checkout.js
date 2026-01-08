@@ -1,3 +1,5 @@
+import { saveOrder as saveOrderService } from "../services/order-service.js";
+
 import {
   checkoutModal,
   termsModal,
@@ -438,11 +440,5 @@ function validateCheckoutForm() {
 }
 
 function saveOrder(orderData) {
-  // Simpan ke localStorage
-  const orders =
-    JSON.parse(localStorage.getItem("bakule_kembang_orders")) || [];
-  orders.push(orderData);
-  localStorage.setItem("bakule_kembang_orders", JSON.stringify(orders));
-
-  console.log("💾 Order saved:", orderData.orderId);
+  return saveOrderService(orderData);
 }

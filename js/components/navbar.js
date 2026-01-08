@@ -42,6 +42,7 @@ export function renderNavbar() {
         <li><a href="#home" class="nav-link"><span class="nav-text">Home</span></a></li>
         <li><a href="#products" class="nav-link"><span class="nav-text">Produk</span></a></li>
         <li><a href="#categories" class="nav-link"><span class="nav-text">Kategori</span></a></li>
+        <li><a href="#orders" class="nav-link"><span class="nav-text">Riwayat</span></a></li>
         <li><a href="#about" class="nav-link"><span class="nav-text">Tentang</span></a></li>
         <li><a href="#contact" class="nav-link"><span class="nav-text">Kontak</span></a></li>
       </ul>
@@ -151,6 +152,7 @@ function createScrolledDropdown(id) {
       <li><a href="#home" class="scrolled-dropdown-link"><i class="fas fa-home"></i> Home</a></li>
       <li><a href="#products" class="scrolled-dropdown-link"><i class="fas fa-store"></i> Produk</a></li>
       <li><a href="#categories" class="scrolled-dropdown-link"><i class="fas fa-list"></i> Kategori</a></li>
+      <li><a href="#orders" class="scrolled-dropdown-link"><i class="fas fa-history"></i> Riwayat</a></li>
       <li><a href="#about" class="scrolled-dropdown-link"><i class="fas fa-info-circle"></i> Tentang</a></li>
       <li><a href="#contact" class="scrolled-dropdown-link"><i class="fas fa-phone"></i> Kontak</a></li>
     </ul>

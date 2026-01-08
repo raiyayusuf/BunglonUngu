@@ -7,6 +7,8 @@ import { updateNavActive } from "./components/navbar.js";
 import { loadContactPage } from "./views/contact.js";
 import { loadCategoriesPage } from "./views/categories.js";
 import { loadCheckoutPage } from "./views/checkout.js";
+import { loadOrdersPage } from "./views/orders.js";
+import { loadOrderDetailPage } from "./views/order-detail.js";
 
 // config router
 const routes = {
@@ -19,6 +21,8 @@ const routes = {
   "#contact": "contact",
   "#cart": "cart",
   "#checkout": "checkout",
+  "#orders": "orders",
+  "#order-detail": "order-detail",
 };
 
 // main router function
@@ -65,20 +69,32 @@ export function router() {
       loadAboutPage();
       break;
 
-    case "cart":
-      loadCartPage();
-      break;
-
     case "checkout":
       loadCheckoutPage();
+      break;
+
+    case "categories":
+      loadCategoriesPage();
       break;
 
     case "contact":
       loadContactPage();
       break;
 
-    case "categories":
-      loadCategoriesPage();
+    case "cart":
+      loadCartPage();
+      break;
+
+    case "orders":
+      loadOrdersPage(); // Riwayat order (list)
+      break;
+
+    case "order-detail":
+      if (param) {
+        loadOrderDetailPage(param); // param = orderId
+      } else {
+        navigateTo("#orders");
+      }
       break;
 
     default:
