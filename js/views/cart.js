@@ -1,6 +1,5 @@
-// js/views/cart.js
 import { deleteModal } from "../components/modal.js";
-console.log("🔄 Modal imported:", deleteModal);
+import { closeCartSidebar } from "../components/cart-sidebar.js";
 
 import {
   getCart,
@@ -378,6 +377,9 @@ export function initializeCartPage() {
     if (getCart().length === 0) {
       alert("Keranjang Anda kosong. Tambahkan produk terlebih dahulu.");
       return;
+    }
+    if (typeof closeCartSidebar === "function") {
+      closeCartSidebar();
     }
     navigateTo("#checkout");
   };

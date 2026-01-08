@@ -211,6 +211,7 @@ function attachSidebarEvents(container) {
         alert("Keranjang kosong! Tambahkan produk terlebih dahulu.");
         return;
       }
+      closeCartSidebar();
       navigateTo("#checkout");
     });
   }
