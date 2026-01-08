@@ -6,6 +6,7 @@ import { loadProductDetailPage } from "./views/product-detail.js";
 import { updateNavActive } from "./components/navbar.js";
 import { loadContactPage } from "./views/contact.js";
 import { loadCategoriesPage } from "./views/categories.js";
+import { loadCheckoutPage } from "./views/checkout.js";
 
 // config router
 const routes = {
@@ -17,6 +18,7 @@ const routes = {
   "#about": "about",
   "#contact": "contact",
   "#cart": "cart",
+  "#checkout": "checkout",
 };
 
 // main router function
@@ -60,6 +62,10 @@ export function router() {
 
     case "cart":
       loadCartPage();
+      break;
+
+    case "checkout":
+      loadCheckoutPage();
       break;
 
     case "contact":

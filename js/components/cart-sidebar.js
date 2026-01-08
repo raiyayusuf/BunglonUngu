@@ -211,7 +211,7 @@ function attachSidebarEvents(container) {
         alert("Keranjang kosong! Tambahkan produk terlebih dahulu.");
         return;
       }
-      alert("Checkout functionality akan segera hadir!");
+      navigateTo("#checkout");
     });
   }
 

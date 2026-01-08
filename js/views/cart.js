@@ -379,10 +379,7 @@ export function initializeCartPage() {
       alert("Keranjang Anda kosong. Tambahkan produk terlebih dahulu.");
       return;
     }
-    alert(
-      "Checkout functionality akan segera hadir! Total: " +
-        formatPrice(getCartTotal())
-    );
+    navigateTo("#checkout");
   };
 
   const checkoutBtn = document.getElementById("checkout-btn");
