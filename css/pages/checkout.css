@@ -320,6 +320,8 @@
 .checkbox-label input[type="checkbox"] {
   margin-top: 0.25rem;
   transform: scale(1.2);
+  cursor: pointer;
+  accent-color: var(--primary);
 }
 
 .terms-link {

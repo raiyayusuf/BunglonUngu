@@ -260,4 +260,420 @@ const deleteModal = new Modal();
 // Auto-initialize on import
 deleteModal.init();
 
-export { deleteModal, Modal };
+class CheckoutModal {
+  constructor() {
+    this.modalId = "checkoutModal";
+    this.modalHTML = `
+      <div class="modal-overlay" id="${this.modalId}">
+        <div class="modal-container checkout-modal">
+          <button class="modal-close-btn" id="modal-close-btn" aria-label="Tutup">
+            &times;
+          </button>
+          
+          <div class="modal-header">
+            <div class="modal-icon checkout-icon">
+              <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3>Perhatian</h3>
+          </div>
+          
+          <div class="modal-body">
+            <p id="checkout-modal-message">Anda harus menyetujui Syarat & Ketentuan terlebih dahulu.</p>
+          </div>
+          
+          <div class="modal-footer">
+            <button class="modal-btn primary" id="checkout-modal-terms-btn">
+              <i class="fas fa-file-alt"></i> Lihat Syarat & Ketentuan
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    this.currentMessage = "";
+    this.isInitialized = false;
+    this.modal = null;
+    this.eventHandlers = {};
+  }
+
+  init() {
+    if (this.isInitialized) {
+      console.log("🔁 CheckoutModal already initialized");
+      return;
+    }
+
+    console.log("🔧 CheckoutModal initializing...");
+
+    // Clean up old modal
+    const oldModal = document.getElementById(this.modalId);
+    if (oldModal) oldModal.remove();
+
+    // Inject to modal container
+    let modalContainer = document.getElementById("modal-container");
+    if (!modalContainer) {
+      modalContainer = document.createElement("div");
+      modalContainer.id = "modal-container";
+      document.body.appendChild(modalContainer);
+    }
+
+    // Add modal HTML
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = this.modalHTML;
+    modalContainer.appendChild(tempDiv.firstElementChild);
+
+    // Get elements
+    this.modal = document.getElementById(this.modalId);
+    this.closeBtn = document.getElementById("modal-close-btn");
+    this.termsBtn = document.getElementById("checkout-modal-terms-btn");
+    this.okBtn = document.getElementById("checkout-modal-ok-btn");
+    this.messageEl = document.getElementById("checkout-modal-message");
+
+    if (!this.modal) {
+      console.error("❌ CheckoutModal elements not found!");
+      return;
+    }
+
+    this.setupEvents();
+    this.isInitialized = true;
+    console.log("✅ CheckoutModal initialized");
+  }
+
+  setupEvents() {
+    this.cleanupEvents();
+
+    // Overlay click to close
+    this.eventHandlers.overlayClick = (e) => {
+      if (e.target === this.modal) this.close();
+    };
+    this.modal.addEventListener("click", this.eventHandlers.overlayClick);
+
+    // Close button
+    this.eventHandlers.closeClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.close();
+    };
+
+    if (this.closeBtn) {
+      this.closeBtn.addEventListener("click", this.eventHandlers.closeClick);
+      this.closeBtn.style.cursor = "pointer";
+      this.closeBtn.style.pointerEvents = "auto";
+    }
+
+    // Terms button - BUKA TERMS MODAL!
+    this.eventHandlers.termsClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Tutup modal perhatian dulu
+      this.close();
+
+      // Buka modal terms setelah delay kecil
+      setTimeout(() => {
+        termsModal.open();
+      }, 300);
+    };
+
+    if (this.termsBtn) {
+      this.termsBtn.addEventListener("click", this.eventHandlers.termsClick);
+      this.termsBtn.style.cursor = "pointer";
+      this.termsBtn.style.pointerEvents = "auto";
+    }
+
+    // Escape key
+    this.eventHandlers.escapeKey = (e) => {
+      if (e.key === "Escape" && this.modal.classList.contains("active")) {
+        this.close();
+      }
+    };
+    document.addEventListener("keydown", this.eventHandlers.escapeKey);
+
+    console.log("✅ CheckoutModal events setup complete");
+  }
+
+  cleanupEvents() {
+    // Remove all event listeners
+    for (const [event, handler] of Object.entries(this.eventHandlers)) {
+      if (event === "escapeKey") {
+        document.removeEventListener("keydown", handler);
+      } else {
+        this.modal?.removeEventListener(event, handler);
+        this.closeBtn?.removeEventListener("click", handler);
+        this.okBtn?.removeEventListener("click", handler);
+        this.termsBtn?.removeEventListener("click", handler);
+      }
+    }
+    this.eventHandlers = {};
+  }
+
+  open(message = "Anda harus menyetujui Syarat & Ketentuan terlebih dahulu.") {
+    if (!this.isInitialized) this.init();
+
+    this.currentMessage = message;
+
+    if (this.messageEl) {
+      this.messageEl.textContent = message;
+    }
+
+    if (this.modal) {
+      this.modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+
+      // DEBUG: Cek tombol
+      console.log("🔍 Modal buttons check:");
+      console.log("Close button:", this.closeBtn);
+      console.log("OK button:", this.okBtn);
+      console.log("Terms button:", this.termsBtn);
+
+      // Force enable buttons
+      setTimeout(() => {
+        if (this.closeBtn) {
+          this.closeBtn.style.cursor = "pointer";
+          this.closeBtn.style.pointerEvents = "auto";
+          this.closeBtn.disabled = false;
+        }
+        if (this.okBtn) {
+          this.okBtn.style.cursor = "pointer";
+          this.okBtn.style.pointerEvents = "auto";
+          this.okBtn.disabled = false;
+          this.okBtn.focus(); // Focus ke OK button
+        }
+        if (this.termsBtn) {
+          this.termsBtn.style.cursor = "pointer";
+          this.termsBtn.style.pointerEvents = "auto";
+          this.termsBtn.disabled = false;
+        }
+      }, 50);
+    }
+
+    console.log("🟢 CheckoutModal opened:", message);
+  }
+
+  close() {
+    if (this.modal) {
+      this.modal.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  }
+
+  destroy() {
+    this.cleanupEvents();
+    this.modal?.remove();
+    this.isInitialized = false;
+    this.modal = null;
+  }
+}
+
+// Export both modals
+const checkoutModal = new CheckoutModal();
+
+class TermsModal {
+  constructor() {
+    this.modalId = "termsModal";
+    this.modalHTML = `
+      <div class="modal-overlay" id="${this.modalId}">
+        <div class="modal-container terms-modal">
+          <button class="modal-close-btn" id="terms-modal-close-btn" aria-label="Tutup">
+            &times;
+          </button>
+          
+          <div class="modal-header">
+            <div class="modal-icon terms-icon">
+              <i class="fas fa-file-contract"></i>
+            </div>
+            <h3>Syarat & Ketentuan</h3>
+          </div>
+          
+          <div class="modal-body">
+            <div class="terms-content" id="terms-content">
+              <h4>Syarat & Ketentuan Bakule Kembang:</h4>
+              <ol>
+                <li>Produk bunga akan dikirim sesuai ketersediaan stok</li>
+                <li>Pengembalian hanya bisa dilakukan dalam 24 jam setelah penerimaan</li>
+                <li>Warna bunga mungkin sedikit berbeda dari gambar karena pencahayaan</li>
+                <li>Untuk pengiriman same-day, order harus dilakukan sebelum jam 14:00</li>
+              </ol>
+              <p class="terms-note">Dengan mencentang kotak ini, Anda menyetujui semua syarat di atas.</p>
+            </div>
+          </div>
+          
+          <div class="modal-footer">
+            <button class="modal-btn primary" id="terms-modal-agree-btn">
+              <i class="fas fa-check-circle"></i> Mengerti & Setuju
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    this.isInitialized = false;
+    this.modal = null;
+    this.eventHandlers = {};
+  }
+
+  init() {
+    if (this.isInitialized) {
+      console.log("🔁 TermsModal already initialized");
+      return;
+    }
+
+    console.log("🔧 TermsModal initializing...");
+
+    // Clean up old modal
+    const oldModal = document.getElementById(this.modalId);
+    if (oldModal) oldModal.remove();
+
+    // Inject to modal container
+    let modalContainer = document.getElementById("modal-container");
+    if (!modalContainer) {
+      modalContainer = document.createElement("div");
+      modalContainer.id = "modal-container";
+      document.body.appendChild(modalContainer);
+    }
+
+    // Add modal HTML
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = this.modalHTML;
+    modalContainer.appendChild(tempDiv.firstElementChild);
+
+    // Get elements
+    this.modal = document.getElementById(this.modalId);
+    this.closeBtn = document.getElementById("terms-modal-close-btn");
+    this.agreeBtn = document.getElementById("terms-modal-agree-btn");
+    this.contentEl = document.getElementById("terms-content");
+
+    if (!this.modal) {
+      console.error("❌ TermsModal elements not found!");
+      return;
+    }
+
+    this.setupEvents();
+    this.isInitialized = true;
+    console.log("✅ TermsModal initialized");
+  }
+
+  setupEvents() {
+    this.cleanupEvents();
+
+    // Overlay click to close
+    this.eventHandlers.overlayClick = (e) => {
+      if (e.target === this.modal) this.close();
+    };
+    this.modal.addEventListener("click", this.eventHandlers.overlayClick);
+
+    // Close button
+    this.eventHandlers.closeClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.close();
+    };
+
+    if (this.closeBtn) {
+      this.closeBtn.addEventListener("click", this.eventHandlers.closeClick);
+      this.closeBtn.style.cursor = "pointer";
+      this.closeBtn.style.pointerEvents = "auto";
+    }
+
+    // Agree button - AUTO-CHECK CHECKBOX!
+    this.eventHandlers.agreeClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Auto-check the terms checkbox
+      const termsCheckbox = document.getElementById("agree-terms");
+      if (termsCheckbox) {
+        termsCheckbox.checked = true;
+
+        // Trigger change event if needed
+        termsCheckbox.dispatchEvent(new Event("change"));
+
+        // Highlight feedback
+        const label = termsCheckbox.closest(".checkbox-label");
+        if (label) {
+          label.style.backgroundColor = "rgba(126, 96, 191, 0.2)";
+          label.style.transition = "background-color 0.5s";
+          setTimeout(() => {
+            label.style.backgroundColor = "";
+          }, 1500);
+        }
+      }
+
+      this.close();
+    };
+
+    if (this.agreeBtn) {
+      this.agreeBtn.addEventListener("click", this.eventHandlers.agreeClick);
+      this.agreeBtn.style.cursor = "pointer";
+      this.agreeBtn.style.pointerEvents = "auto";
+    }
+
+    // Escape key
+    this.eventHandlers.escapeKey = (e) => {
+      if (e.key === "Escape" && this.modal.classList.contains("active")) {
+        this.close();
+      }
+    };
+    document.addEventListener("keydown", this.eventHandlers.escapeKey);
+
+    console.log("✅ TermsModal events setup complete");
+  }
+
+  cleanupEvents() {
+    for (const [event, handler] of Object.entries(this.eventHandlers)) {
+      if (event === "escapeKey") {
+        document.removeEventListener("keydown", handler);
+      } else {
+        this.modal?.removeEventListener(event, handler);
+        this.closeBtn?.removeEventListener("click", handler);
+        this.agreeBtn?.removeEventListener("click", handler);
+      }
+    }
+    this.eventHandlers = {};
+  }
+
+  open() {
+    if (!this.isInitialized) this.init();
+
+    if (this.modal) {
+      this.modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+
+      // Focus on agree button
+      setTimeout(() => {
+        if (this.agreeBtn) {
+          this.agreeBtn.focus();
+          this.agreeBtn.style.cursor = "pointer";
+          this.agreeBtn.style.pointerEvents = "auto";
+        }
+      }, 100);
+    }
+
+    console.log("🟢 TermsModal opened");
+  }
+
+  close() {
+    if (this.modal) {
+      this.modal.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  }
+
+  destroy() {
+    this.cleanupEvents();
+    this.modal?.remove();
+    this.isInitialized = false;
+    this.modal = null;
+  }
+}
+
+// Create instance
+const termsModal = new TermsModal();
+
+export {
+  deleteModal,
+  checkoutModal,
+  termsModal,
+  Modal,
+  CheckoutModal,
+  TermsModal,
+};

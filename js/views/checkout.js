@@ -1,3 +1,5 @@
+import { checkoutModal, termsModal } from "../components/modal.js";
+
 // js/views/checkout.js
 import {
   getCart,
@@ -281,6 +283,16 @@ function initializeCheckoutPage() {
   // Initialize total
   updateOrderTotal();
 
+  const termsLink = document.querySelector(".terms-link");
+
+  if (termsLink) {
+    termsLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Bisa buka modal dengan isi terms & conditions lengkap
+      termsModal.open();
+    });
+  }
+
   console.log("✅ Checkout page initialized");
 }
 
@@ -394,7 +406,9 @@ function handleOrderSubmit(e) {
 function validateCheckoutForm() {
   const termsChecked = document.getElementById("agree-terms").checked;
   if (!termsChecked) {
-    alert("Anda harus menyetujui Syarat & Ketentuan terlebih dahulu.");
+    checkoutModal.open(
+      "Anda harus menyetujui Syarat & Ketentuan terlebih dahulu."
+    );
     return false;
   }
 
@@ -410,9 +424,8 @@ function validateCheckoutForm() {
   for (const fieldId of requiredFields) {
     const field = document.getElementById(fieldId);
     if (!field.value.trim()) {
-      alert(
-        `Harap lengkapi field: ${field.previousElementSibling.textContent}`
-      );
+      const fieldLabel = field.previousElementSibling?.textContent || fieldId;
+      checkoutModal.open(`Harap lengkapi field: ${fieldLabel}`);
       field.focus();
       return false;
     }
