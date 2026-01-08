@@ -4,6 +4,7 @@ import {
   getCartTotal,
   clearCart,
   formatPrice,
+  removeMultipleFromCart,
 } from "../services/cart-service.js";
 import { navigateTo } from "../router.js";
 
@@ -14,25 +15,51 @@ export function loadCheckoutPage() {
 
   const app = document.getElementById("app");
 
-  // Cek cart kosong
-  const items = getCart();
+  // AMBIL ITEMS YANG DIPILIH (atau semua kalo gaada selected)
+  const selectedIds = JSON.parse(
+    localStorage.getItem("bakule_kembang_selected_items") || "[]"
+  );
+
+  let items;
+  if (selectedIds.length > 0) {
+    // Hanya tampilkan items yang dipilih
+    items = getCart().filter((item) => selectedIds.includes(item.id));
+    console.log(`🛒 Checkout dengan ${items.length} produk terpilih`);
+  } else {
+    // Normal checkout (semua items)
+    items = getCart();
+  }
+
   if (items.length === 0) {
     alert("Keranjang Anda kosong. Silakan tambahkan produk terlebih dahulu.");
     navigateTo("#cart");
     return;
   }
 
-  const total = getCartTotal();
+  // GUNAKAN FUNGSI BARU UNTUK TOTAL
+  const total =
+    selectedIds.length > 0
+      ? items.reduce((total, item) => total + item.price * item.quantity, 0)
+      : getCartTotal();
+
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Render checkout page
+  // Render checkout page dengan items yang sudah difilter
   app.innerHTML = `
     <div class="checkout-page" id="checkout-page">
       <div class="checkout-container">
-        <!-- HEADER -->
+        <!-- HEADER - TAMBAH INDIKATOR SELECTED -->
         <div class="checkout-header">
           <h1><i class="fas fa-credit-card"></i> Checkout</h1>
           <p>Langkah terakhir untuk mendapatkan bunga indah Anda</p>
+          ${
+            selectedIds.length > 0
+              ? `<div class="selected-notice">
+              <i class="fas fa-check-circle"></i>
+              Checkout ${selectedIds.length} produk terpilih
+            </div>`
+              : ""
+          }
         </div>
 
         <div class="checkout-content">
@@ -56,7 +83,7 @@ export function loadCheckoutPage() {
 
                 <div class="form-group">
                   <label for="email">Email *</label>
-                  <input type="email" id="email" name="email" required placeholder="email@contoh.com">
+                    <input type="email" id="email" name="email" required placeholder="email@contoh.com">
                 </div>
 
                 <div class="form-group">
@@ -215,6 +242,24 @@ export function loadCheckoutPage() {
   initializeCheckoutPage();
 }
 
+function getCurrentCheckoutTotal() {
+  const selectedIds = JSON.parse(
+    localStorage.getItem("bakule_kembang_selected_items") || "[]"
+  );
+
+  if (selectedIds.length > 0) {
+    const selectedItems = getCart().filter((item) =>
+      selectedIds.includes(item.id)
+    );
+    return selectedItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  }
+
+  return getCartTotal();
+}
+
 function initializeCheckoutPage() {
   console.log("🔧 Initializing checkout page...");
 
@@ -240,7 +285,7 @@ function initializeCheckoutPage() {
 }
 
 function updateOrderTotal() {
-  const cartTotal = getCartTotal();
+  const cartTotal = getCurrentCheckoutTotal(); // <-- PAKAI HELPER FUNCTION
   const shippingCost = getSelectedShippingCost();
   const total = cartTotal + shippingCost;
 
@@ -285,6 +330,26 @@ function handleOrderSubmit(e) {
 
   // Ambil data form
   const formData = new FormData(checkoutForm);
+
+  // Ambil items yang dipilih (atau semua)
+  const selectedIds = JSON.parse(
+    localStorage.getItem("bakule_kembang_selected_items") || "[]"
+  );
+
+  let orderItems;
+  if (selectedIds.length > 0) {
+    orderItems = getCart().filter((item) => selectedIds.includes(item.id));
+  } else {
+    orderItems = getCart();
+  }
+
+  const subtotal = orderItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const shippingCost = getSelectedShippingCost();
+  const total = subtotal + shippingCost;
+
   const orderData = {
     customer: {
       name: formData.get("name"),
@@ -297,19 +362,29 @@ function handleOrderSubmit(e) {
     shipping: formData.get("shipping"),
     payment: formData.get("payment"),
     notes: formData.get("notes") || "",
-    items: getCart(),
-    subtotal: getCartTotal(),
-    shippingCost: getSelectedShippingCost(),
-    total: getCartTotal() + getSelectedShippingCost(),
+    items: orderItems,
+    subtotal: subtotal,
+    shippingCost: shippingCost,
+    total: total,
     orderDate: new Date().toISOString(),
     orderId: "ORD-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+    isPartialCheckout: selectedIds.length > 0,
   };
 
   // Simpan order ke localStorage
   saveOrder(orderData);
 
-  // Clear cart
-  clearCart();
+  // HAPUS ITEMS YANG DIPILIH SAJA DARI CART
+  if (selectedIds.length > 0) {
+    // Hapus hanya items yang dipilih dari cart
+    removeMultipleFromCart(selectedIds);
+  } else {
+    // Normal checkout: clear semua cart
+    clearCart();
+  }
+
+  // Clear selected items dari localStorage
+  localStorage.removeItem("bakule_kembang_selected_items");
 
   // Redirect ke halaman sukses
   alert(`🎉 Order berhasil! No. Order: ${orderData.orderId}`);

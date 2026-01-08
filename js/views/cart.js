@@ -490,13 +490,24 @@ function setupBulkActions() {
       e.stopPropagation();
 
       const selectedIds = getSelectedItemIds();
-      if (selectedIds.length === 0) return;
+      if (selectedIds.length === 0) {
+        // alert("Pilih minimal 1 produk untuk checkout.");
+        return;
+      }
 
-      // Logika checkout selected items
-      alert(
-        `Checkout ${selectedIds.length} produk yang dipilih! Fitur lanjutan akan segera hadir.`
+      // IMPORTANT: Save selected items to localStorage
+      localStorage.setItem(
+        "bakule_kembang_selected_items",
+        JSON.stringify(selectedIds)
       );
-      // TODO: Implement checkout selected items
+
+      // Close cart sidebar if open
+      if (typeof closeCartSidebar === "function") {
+        closeCartSidebar();
+      }
+
+      // Navigate to checkout
+      navigateTo("#checkout");
     });
   }
 }

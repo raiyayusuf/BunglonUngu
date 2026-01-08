@@ -28,6 +28,11 @@ export function router() {
   const hash = window.location.hash || "#home";
   console.log(`Rounting to: ${hash}`);
 
+  if (hash !== "#checkout") {
+    localStorage.removeItem("bakule_kembang_selected_items");
+    console.log("🧹 Cleared selected items (not going to checkout)");
+  }
+
   window.scrollTo({
     top: 0,
     left: 0,

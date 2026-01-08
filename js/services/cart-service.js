@@ -172,3 +172,29 @@ export function getSelectedItemsTotal(selectedIds) {
 export function getCartItemsByIds(ids) {
   return cart.filter((item) => ids.includes(item.id));
 }
+
+export function getSelectedCartItems() {
+  const selectedIds = JSON.parse(
+    localStorage.getItem("bakule_kembang_selected_items") || "[]"
+  );
+
+  if (selectedIds.length === 0) {
+    // If no selected items, return all cart items (normal checkout)
+    return getCart();
+  }
+
+  // Filter cart to only selected items
+  return getCart().filter((item) => selectedIds.includes(item.id));
+}
+
+export function getSelectedCartTotal() {
+  const selectedItems = getSelectedCartItems();
+  return selectedItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+}
+
+export function clearSelectedItems() {
+  localStorage.removeItem("bakule_kembang_selected_items");
+}

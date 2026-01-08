@@ -363,3 +363,34 @@
 .form-group textarea:valid:not(:placeholder-shown) {
   border-color: #00b894;
 }
+
+/* Selected items notice */
+.selected-notice {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border: 2px solid var(--primary-light);
+  animation: fadeIn 0.3s ease;
+}
+
+.selected-notice i {
+  color: var(--primary);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
