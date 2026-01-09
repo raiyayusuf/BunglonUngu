@@ -645,6 +645,7 @@ function initializeProductsPage() {
   updateProductsDisplay();
   setupEventListeners();
   setupProductCardEvents();
+  setupProductCardNavigation();
   console.log("✅ Products page initialized");
 }
 

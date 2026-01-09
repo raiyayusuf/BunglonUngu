@@ -213,3 +213,20 @@ export function renderProductCards(products, container) {
 
   console.log("✅ Products rendered:", products.length);
 }
+
+export function setupProductCardNavigation() {
+  document.addEventListener("click", (e) => {
+    const productCard = e.target.closest(".product-card");
+    if (
+      productCard &&
+      !e.target.closest(".add-to-cart-btn") &&
+      !e.target.closest(".quick-view-btn")
+    ) {
+      const productId = productCard.dataset.id;
+      if (productId) {
+        // Navigate to product detail
+        window.location.hash = `#product/${productId}`;
+      }
+    }
+  });
+}
