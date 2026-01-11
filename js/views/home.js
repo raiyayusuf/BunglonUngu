@@ -10,7 +10,12 @@ export function loadHomePage() {
   const recentTestimonials = getRecentTestimonials(6);
 
   // Duplikasi produk biar seamless loop
-  const duplicatedProducts = [...featuredProducts, ...featuredProducts];
+  const duplicatedProducts = [
+    ...featuredProducts,
+    ...featuredProducts,
+    ...featuredProducts,
+    ...featuredProducts,
+  ];
 
   app.innerHTML = /*html*/ `
     <section class="hero-section">
@@ -79,7 +84,7 @@ export function loadHomePage() {
               }" loading="lazy" onerror="this.src='assets/image/placeholder.jpg'; this.onerror=null;">
                 ${
                   product.featured
-                    ? '<span class="featured-badge">⭐Unggulan</span>'
+                    ? '<span class="featured-badge">Unggulan</span>'
                     : ""
                 }
               </div>

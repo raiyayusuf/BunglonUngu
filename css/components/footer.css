@@ -4,7 +4,6 @@
   --primary: #7e60bf;
   --primary-light: #e4b1f0;
   --primary-soft: #ffe1ff;
-
   --text-dark: #2d3436;
   --text-light: #f8f9fa;
   --bg-light: #fefefe;
@@ -19,6 +18,7 @@
   margin-top: auto;
   position: relative;
   overflow: hidden;
+  font-family: "Poppins", sans-serif;
 }
 
 .footer::before {
@@ -36,36 +36,74 @@
   );
 }
 
+/* 🔥 PERUBAHAN: 5 kolom sama rata */
 .footer-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250, 1fr));
-  gap: 2.5rem;
-  max-width: 1200px;
+  grid-template-columns: 1.5fr 1fr 1.2fr 1fr 1.2fr;
+  gap: 2rem;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 20px;
   position: relative;
   z-index: 1;
 }
 
-/* Footer Section */
-.footer-logo {
+.footer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-section h4 {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-section h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--primary-light);
+  border-radius: 2px;
+}
+
+/* Kolom 1: Logo & Description */
+.logo-section {
+  padding-right: 1rem;
+}
+
+.footer-logo-container {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 1.2rem;
 }
 
-.footer-logo .logo {
+.footer-logo {
   font-size: 2.5rem;
   color: var(--primary-light);
-  filter: drop-shadow(0 0 8px rgba(288, 177, 240, 0.5));
+  filter: drop-shadow(0 0 8px rgba(228, 177, 240, 0.5));
 }
 
-.footer-logo h3 {
+.footer-brand h3 {
   color: white;
   font-size: 1.6rem;
   font-weight: 700;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+.footer-tagline {
+  color: var(--primary-light);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
 .footer-description {
@@ -75,38 +113,11 @@
   font-size: 0.95rem;
 }
 
-/* Sosial Links */
-.social-links {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(288, 177, 240, 0.2);
-}
-
-.social-link:hover {
-  background: var(--primary);
-  transform: translateY(-5px) scale(1.1);
-  box-shadow: 0 5px 15px rgba(126, 96, 191, 0.4);
-  border-color: var(--primary-light);
-}
-
-/* Links List */
-.footer-Links {
+/* Kolom 2: Links List */
+.footer-links {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer-links li {
@@ -128,6 +139,7 @@
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-block;
+  font-size: 0.95rem;
 }
 
 .footer-links a:hover {
@@ -135,9 +147,11 @@
   transform: translateX(5px);
 }
 
-/* Contact Info */
+/* Kolom 3: Contact Info */
 .contact-info {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .contact-info li {
@@ -153,9 +167,86 @@
   width: 20px;
   font-size: 1.1rem;
   margin-top: 3px;
+  flex-shrink: 0;
 }
 
-/* Newsletter */
+.contact-info span {
+  color: var(--primary-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* 🔥 KOLOM 4: Media Sosial (SIMPLE ICONS) */
+.social-section .social-description {
+  color: var(--primary-soft);
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+}
+
+/* 🔥 Grid 2x2 untuk icon */
+.social-icons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.social-icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  color: white;
+}
+
+/* Warna per platform dengan transparansi */
+.social-icon-link[aria-label="WhatsApp"] {
+  background: rgba(37, 211, 102, 0.15);
+  border: 1px solid rgba(37, 211, 102, 0.3);
+}
+.social-icon-link[aria-label="WhatsApp"]:hover {
+  background: rgba(37, 211, 102, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+}
+
+.social-icon-link[aria-label="Instagram"] {
+  background: rgba(228, 64, 95, 0.15);
+  border: 1px solid rgba(228, 64, 95, 0.3);
+}
+.social-icon-link[aria-label="Instagram"]:hover {
+  background: rgba(228, 64, 95, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(228, 64, 95, 0.3);
+}
+
+.social-icon-link[aria-label="GitHub"] {
+  background: rgba(51, 51, 51, 0.15);
+  border: 1px solid rgba(51, 51, 51, 0.3);
+}
+.social-icon-link[aria-label="GitHub"]:hover {
+  background: rgba(51, 51, 51, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(51, 51, 51, 0.3);
+}
+
+.social-icon-link[aria-label="LinkedIn"] {
+  background: rgba(10, 102, 194, 0.15);
+  border: 1px solid rgba(10, 102, 194, 0.3);
+}
+.social-icon-link[aria-label="LinkedIn"]:hover {
+  background: rgba(10, 102, 194, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(10, 102, 194, 0.3);
+}
+
+/* Kolom 5: Newsletter */
 .newsletter-form {
   display: flex;
   flex-direction: column;
@@ -165,20 +256,22 @@
 
 .newsletter-form input {
   padding: 0.9rem 1rem;
-  border: 1px solid rgba(288, 177, 240, 0.3);
+  border: 1px solid rgba(228, 177, 240, 0.3);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
   color: white;
   font-family: "Poppins", sans-serif;
   font-size: 0.95rem;
   transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .newsletter-form input:focus {
   outline: none;
   border-color: var(--primary-light);
   background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 3px rgba(288, 177, 240, 0.2);
+  box-shadow: 0 0 0 3px rgba(228, 177, 240, 0.2);
 }
 
 .newsletter-form input::placeholder {
@@ -199,6 +292,12 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .newsletter-form button:hover {
@@ -216,11 +315,16 @@
   text-align: center;
   padding-top: 2.5rem;
   margin-top: 2.5rem;
-  border-top: 1px solid rgba(288, 177, 240, 0.2);
+  border-top: 1px solid rgba(228, 177, 240, 0.2);
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
   position: relative;
   z-index: 1;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .github-note {
@@ -240,34 +344,76 @@
   text-decoration: underline;
 }
 
-/* Responsive */
+.github-note i {
+  margin-right: 5px;
+}
+
+/* 🔥 RESPONSIVE 5 KOLOM */
+@media (max-width: 1200px) {
+  .footer-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .logo-section {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 992px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  .logo-section {
+    grid-column: span 2;
+  }
+
+  .social-section,
+  .newsletter-section {
+    grid-column: span 1;
+  }
+}
+
 @media (max-width: 768px) {
   .footer-container {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 2.5rem;
+  }
+
+  .logo-section {
+    grid-column: span 1;
   }
 
   .footer-section {
     text-align: center;
   }
 
-  .footer-logo {
+  .footer-logo-container {
     justify-content: center;
     flex-direction: column;
     text-align: center;
     gap: 8px;
   }
 
-  .footer-logo .logo {
+  .footer-logo {
     font-size: 2rem;
   }
 
-  .social-links {
+  .footer-section h4::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .social-icons-grid {
     justify-content: center;
+    max-width: 200px;
+    margin: 0 auto;
   }
 
   .contact-info li {
-    justify-content: center;
+    justify-content: flex-start;
     text-align: left;
     max-width: 300px;
     margin-left: auto;
@@ -280,5 +426,29 @@
 
   .footer-links li {
     padding-left: 0;
+    justify-content: center;
+  }
+
+  .footer-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2rem 0 1rem;
+  }
+
+  .footer-container {
+    padding: 0 15px;
+  }
+
+  .social-icon-link {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
   }
 }
