@@ -6,8 +6,11 @@ export function loadHomePage() {
   console.log("Loading home page...");
 
   const app = document.getElementById("app");
-  const featuredProducts = getFeaturedProducts().slice(0, 25);
+  const featuredProducts = getFeaturedProducts().slice(0, 8);
   const recentTestimonials = getRecentTestimonials(6);
+
+  // Duplikasi produk biar seamless loop
+  const duplicatedProducts = [...featuredProducts, ...featuredProducts];
 
   app.innerHTML = /*html*/ `
     <section class="hero-section">
@@ -64,40 +67,42 @@ export function loadHomePage() {
     
     <section class="featured-products-section">
       <h2 class="section-title">🌺 Produk Unggulan</h2>
-      <div class="products-grid">
-        ${featuredProducts
-          .map(
-            (product) => `
-          <div class="product-card" data-id="${product.id}">
-            <div class="product-image">
-              <img src="${product.image}" alt="${
-              product.name
-            }" loading="lazy" onerror="this.src='assets/image/placeholder.jpg'; this.onerror=null;">
-              ${
-                product.featured
-                  ? '<span class="featured-badge">Unggulan</span>'
-                  : ""
-              }
-            </div>
-            <div class="product-info">
-              <h3 class="product-name">${product.name}</h3>
-              <p class="product-description">${product.description}</p>
-              <div class="product-meta">
-                <span class="product-price">Rp ${product.price.toLocaleString(
-                  "id-ID"
-                )}</span>
-                <span class="product-rating">⭐ ${product.rating}</span>
+      <div class="products-running-container">
+        <div class="products-running-track" id="products-running-track">
+          ${duplicatedProducts
+            .map(
+              (product) => `
+            <div class="product-card-running" data-id="${product.id}">
+              <div class="product-image">
+                <img src="${product.image}" alt="${
+                product.name
+              }" loading="lazy" onerror="this.src='assets/image/placeholder.jpg'; this.onerror=null;">
+                ${
+                  product.featured
+                    ? '<span class="featured-badge">⭐Unggulan</span>'
+                    : ""
+                }
               </div>
-              <button class="btn btn-primary add-to-cart" data-id="${
-                product.id
-              }">
-                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-              </button>
+              <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <div class="product-meta">
+                  <span class="product-price">Rp ${product.price.toLocaleString(
+                    "id-ID"
+                  )}</span>
+                  <span class="product-rating">⭐ ${product.rating}</span>
+                </div>
+                <button class="btn btn-primary add-to-cart" data-id="${
+                  product.id
+                }">
+                  <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                </button>
+              </div>
             </div>
-          </div>
-        `
-          )
-          .join("")}
+          `
+            )
+            .join("")}
+        </div>
       </div>
     </section>
     
@@ -130,6 +135,7 @@ export function loadHomePage() {
   `;
 
   setupHomePageEvents();
+  setupRunningSlider();
 }
 
 function setupHomePageEvents() {
@@ -163,9 +169,22 @@ function handleBodyClick(e) {
     }
   }
 
-  if (e.target.closest(".product-card") && !e.target.closest(".add-to-cart")) {
-    const card = e.target.closest(".product-card");
+  if (
+    e.target.closest(".product-card-running") &&
+    !e.target.closest(".add-to-cart")
+  ) {
+    const card = e.target.closest(".product-card-running");
     const productId = card.getAttribute("data-id");
     console.log(`👁️ Viewing product ${productId} detail`);
   }
+}
+
+function setupRunningSlider() {
+  const track = document.getElementById("products-running-track");
+  if (!track) return;
+
+  // Reset animation untuk restart
+  track.style.animation = "none";
+  track.offsetHeight; // Trigger reflow
+  track.style.animation = null;
 }
