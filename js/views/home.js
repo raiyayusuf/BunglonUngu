@@ -62,7 +62,6 @@ export function loadHomePage() {
       </div>
     </section>
     
-    <!-- FEATURED PRODUCTS SECTION -->
     <section class="featured-products-section">
       <h2 class="section-title">🌺 Produk Unggulan</h2>
       <div class="products-grid">
@@ -71,7 +70,9 @@ export function loadHomePage() {
             (product) => `
           <div class="product-card" data-id="${product.id}">
             <div class="product-image">
-              <img src="${product.image}" alt="${product.name}" loading="lazy">
+              <img src="${product.image}" alt="${
+              product.name
+            }" loading="lazy" onerror="this.src='assets/image/placeholder.jpg'; this.onerror=null;">
               ${
                 product.featured
                   ? '<span class="featured-badge">Unggulan</span>'
@@ -100,7 +101,6 @@ export function loadHomePage() {
       </div>
     </section>
     
-    <!-- TESTIMONIALS SECTION -->
     <section class="testimonials-section">
       <h2 class="section-title">💬 Testimoni Pelanggan</h2>
       <div class="testimonials-grid">
@@ -129,43 +129,32 @@ export function loadHomePage() {
     </section>
   `;
 
-  // Setup event listeners
   setupHomePageEvents();
 }
 
 function setupHomePageEvents() {
   console.log("🏠 Setting up home page events...");
-
-  // HAPUS semua event listener lama
   document.body.removeEventListener("click", handleBodyClick);
-
-  // PASANG event delegation
   document.body.addEventListener("click", handleBodyClick);
 }
 
-// Event delegation handler
 function handleBodyClick(e) {
-  // Handle add to cart buttons
   if (e.target.closest(".add-to-cart")) {
     const button = e.target.closest(".add-to-cart");
     e.stopPropagation();
     e.preventDefault();
 
     const productId = parseInt(button.getAttribute("data-id"));
-    console.log(
-      `🛒 [DELEGATION] Adding product ${productId} to cart - SINGLE CALL`
-    );
+    console.log(`🛒 Adding product ${productId} to cart`);
 
     const success = addToCart(productId, 1);
 
     if (success) {
-      // Visual feedback
       const originalHTML = button.innerHTML;
       button.innerHTML = '<i class="fas fa-check"></i> Ditambahkan!';
       button.classList.add("added");
       button.disabled = true;
 
-      // Reset button after 2 seconds
       setTimeout(() => {
         button.innerHTML = originalHTML;
         button.classList.remove("added");
@@ -174,7 +163,6 @@ function handleBodyClick(e) {
     }
   }
 
-  // Handle product card clicks
   if (e.target.closest(".product-card") && !e.target.closest(".add-to-cart")) {
     const card = e.target.closest(".product-card");
     const productId = card.getAttribute("data-id");
