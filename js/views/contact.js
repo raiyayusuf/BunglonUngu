@@ -153,7 +153,7 @@ export function loadContactPage() {
             </div>
             
             <div class="developer-social">
-              <h4>Hubungi Developer:</h4>
+              <h4>Temukan Saya di Platform Berikut:</h4>
               <div class="social-links">
                 <a href="${contactData.socialLinks.linkedin}" 
                    class="social-link linkedin"

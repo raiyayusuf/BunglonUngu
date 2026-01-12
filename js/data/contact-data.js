@@ -5,8 +5,8 @@ export const contactData = {
     tagline: "Toko Bunga dengan Sentuhan Tradisional Yogyakarta",
     address: "Yogyakarta, Indonesia",
     phone: "082227180340",
-    email: "raiyayusuf.p@gmail.com",
-    instagram: "raiyaysf_",
+    email: "bakulekembang@gmail.com",
+    instagram: "bakule_kembang",
     operatingHours: {
       weekdays: "08:00 - 20:00 WIB",
       weekends: "09:00 - 18:00 WIB",
@@ -45,14 +45,26 @@ export const contactData = {
   // FAQ (Frequently Asked Questions)
   faqs: [
     {
-      question: "Berapa lama waktu pengiriman?",
+      question: "Apakah bunga yang dijual segar?",
       answer:
-        "Pengiriman dalam kota Yogyakarta 2-4 jam, luar kota 1-2 hari tergantung lokasi.",
+        "Semua bunga kami langsung dari petani, dipetik di puncak kesegarannya.",
     },
     {
       question: "Bisa custom buket sesuai permintaan?",
       answer:
-        "Bisa! Silakan hubungi kami via WhatsApp untuk diskusi konsep dan harga.",
+      "Bisa! Silakan hubungi kami via WhatsApp untuk diskusi konsep dan harga.",
+    },
+    {
+      question: "Bisakah kirim foto buket yang sudah jadi sebelum dikirim?",
+      answer: "Bisa! Untuk custom order, kami akan kirim foto preview sebelum dikirim.",
+    },
+    {
+      question: "Berapa lama waktu pengiriman?",
+      answer: "Pengiriman dalam kota Yogyakarta 2-4 jam, luar kota 1-2 hari tergantung lokasi.",
+    },
+    {
+      question: "Apakah ada ongkos kirim?",
+      answer: "Gratis ongkir untuk Yogyakarta kota dengan min. pembelian Rp 250.000. Luar kota menyesuaikan."
     },
     {
       question: "Area pengiriman meliputi mana saja?",
@@ -60,9 +72,8 @@ export const contactData = {
         "Seluruh DIY, dan bisa nego untuk luar daerah dengan tambahan biaya pengiriman.",
     },
     {
-      question: "Apakah bunga yang dijual segar?",
-      answer:
-        "Semua bunga kami langsung dari petani, dipetik di puncak kesegarannya.",
+      question: "Metode pembayaran apa saja yang tersedia?", 
+      answer: "Transfer bank (BTN, BNI, Mandiri), QRIS, Dana, OVO, dan COD (Yogyakarta kota saja)."
     },
   ],
 };
