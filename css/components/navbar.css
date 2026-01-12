@@ -344,6 +344,131 @@
   font-size: 1rem;
 }
 
+/* === LOGO IMAGE === */
+.nav-brand .logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.nav-brand .logo-img {
+  height: 80px; /* Sesuaikan dengan tinggi logo */
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.nav-brand .logo-img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 15px rgba(228, 177, 240, 0.5));
+}
+
+/* === BRAND TEXT === */
+.nav-brand .brand-text {
+  display: none; /* SEMBUNYIKAN di state normal */
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.nav-brand .brand-text h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  line-height: 1.2;
+  color: white;
+}
+
+.nav-brand .brand-text .tagline {
+  font-size: 0.75rem;
+  /* color: var(--primary-soft); */
+  color: white;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.nav-brand .highlight {
+  color: var(--primary-light);
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(288, 177, 240, 0.5);
+}
+
+/* === SCROLLED STATE (Teks muncul, Logo hilang) === */
+.navbar.scrolled {
+  background: rgba(67, 56, 120, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(67, 56, 120, 0.2);
+  padding: 0.5rem 0;
+}
+
+/* Saat scrolled: Logo image HILANG */
+.navbar.scrolled .logo-img {
+  display: none;
+  height: 0;
+  opacity: 0;
+}
+
+/* Saat scrolled: Brand text MUNCUL */
+.navbar.scrolled .brand-text {
+  display: flex;
+  flex-direction: row; /* Atau column sesuai preference */
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar.scrolled .brand-text h1 {
+  font-size: 1.2rem;
+  margin: 0;
+  line-height: 1;
+}
+
+.navbar.scrolled .brand-text .tagline {
+  font-size: 0.7rem;
+  margin: 0;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .nav-brand .logo-img {
+    height: 45px;
+  }
+  
+  .navbar.scrolled .brand-text {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .navbar.scrolled .brand-text h1 {
+    font-size: 1.1rem;
+  }
+  
+  .navbar.scrolled .brand-text .tagline {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-brand .logo-img {
+    height: 40px;
+  }
+  
+  .navbar.scrolled .brand-text h1 {
+    font-size: 1rem;
+  }
+  
+  .navbar.scrolled .brand-text .tagline {
+    font-size: 0.55rem;
+  }
+}
+
 /* ===== SCROLLED STATE ===== */
 .navbar.scrolled {
   background: rgba(67, 56, 120, 0.95);

@@ -30,7 +30,16 @@ export function renderNavbar() {
     <div class="nav-container">
       <!-- Brand / Logo -->
       <div class="nav-brand">
-        <span class="logo">🌸</span>
+        <!-- LOGO IMAGE (hanya tampil di navbar full) -->
+        <a href="#home" class="logo-link">
+          <img 
+            src="assets/image/logo/logo-bakule-kembang-navbar.png" 
+            alt="Bakule Kembang"
+            class="logo-img"
+          >
+        </a>
+        
+        <!-- TEKS BRAND (hanya tampil di navbar scrolled) -->
         <div class="brand-text">
           <h1>Bakule <span class="highlight">Kembang</span></h1>
           <small class="tagline">Florist Yogyakarta</small>

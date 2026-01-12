@@ -84,7 +84,7 @@ export function loadHomePage() {
               }" loading="lazy" onerror="this.src='assets/image/placeholder.jpg'; this.onerror=null;">
                 ${
                   product.featured
-                    ? '<span class="featured-badge">Unggulan</span>'
+                    ? '<span class="featured-badge">⭐Unggulan</span>'
                     : ""
                 }
               </div>

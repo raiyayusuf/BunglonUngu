@@ -78,10 +78,23 @@
   padding-right: 1rem;
 }
 
+.footer-logo-img {
+  width: 300px; /* Sesuaikan ukuran */
+  height: auto;
+  object-fit: contain;
+  /* filter: drop-shadow(0 0 10px rgba(228, 177, 240, 0.5)); */
+  transition: transform 0.3s ease;
+}
+
+.footer-logo-img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 15px rgba(228, 177, 240, 0.5));
+}
+
 .footer-logo-container {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px; /* Adjust spacing */
   margin-bottom: 1.2rem;
 }
 

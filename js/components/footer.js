@@ -7,11 +7,11 @@ export function renderFooter() {
         <!-- Kolom 1: Logo & Description -->
         <div class="footer-section logo-section">
           <div class="footer-logo-container">
-            <span class="footer-logo">🌸</span>
-            <div class="footer-brand">
-              <h3>Bakule Kembang</h3>
-              <p class="footer-tagline">FLORIST YOGYAKARTA</p>
-            </div>
+          <img 
+            src="assets/image/logo/logo-bakule-kembang-navbar.png" 
+            alt="Bakule Kembang"
+            class="footer-logo-img"
+          >
           </div>  
           <p class="footer-description">
             Toko Bunga modern dari hasil iseng sinchan dengan sentuhan horor untuk semua kebutuhan spesial Anda.

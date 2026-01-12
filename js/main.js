@@ -32,7 +32,7 @@ function initApp() {
   // 6. Hide loading immediately
   const loading = document.getElementById("loading");
   if (loading) {
-    loading.style.display = "none";
+    loading.style.display = "none"; 
   }
 
   // 7. CALL ROUTER FOR INITIAL PAGE
