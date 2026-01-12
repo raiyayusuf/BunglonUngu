@@ -89,8 +89,7 @@ export function loadHomePage() {
                 }
               </div>
               <div class="product-info">
-                <h3 class="product-name">${product.name}</h3>
-                <p class="product-description">${product.description}</p>
+                <h4 class="product-name">${product.name}</h4>
                 <div class="product-meta">
                   <span class="product-price">Rp ${product.price.toLocaleString(
                     "id-ID"
