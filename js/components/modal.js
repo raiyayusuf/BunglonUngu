@@ -680,10 +680,10 @@ class SuccessModal {
           </button>
           
           <div class="modal-content">
-            <!-- ICON BESAR -->
+            <!-- ICON BESAR 
             <div class="success-icon-large">
               <i class="fas fa-check-circle"></i>
-            </div>
+            </div> -->
             
             <!-- JUDUL -->
             <h2 class="success-title">🎉 Order Berhasil!</h2>
