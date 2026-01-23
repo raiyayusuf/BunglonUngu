@@ -1,4 +1,4 @@
-// js/views/product-detail.js
+// js/views/product-detail.js:
 import {
   getProductById,
   getRelatedProducts,
@@ -56,8 +56,8 @@ export function loadProductDetailPage(productId) {
         <div class="product-images">
           <div class="main-image">
             <img src="${product.image}" alt="${
-    product.name
-  }" class="product-main-image" id="product-main-image">
+              product.name
+            }" class="product-main-image" id="product-main-image">
             ${
               product.featured
                 ? '<span class="featured-badge">⭐ Unggulan</span>'
@@ -74,8 +74,8 @@ export function loadProductDetailPage(productId) {
             <div class="product-meta">
               <span class="product-rating">
                 ${stars} <strong>${product.rating}</strong> (${
-    product.reviewCount || 0
-  } ulasan)
+                  product.reviewCount || 0
+                } ulasan)
               </span>
               <span class="product-sku">SKU: FL${product.id
                 .toString()
@@ -115,8 +115,8 @@ export function loadProductDetailPage(productId) {
                     .map(
                       (c) =>
                         `<span class="color-chip" style="background-color: ${getColorCode(
-                          c
-                        )}" title="${c}"></span>`
+                          c,
+                        )}" title="${c}"></span>`,
                     )
                     .join("")}
                   ${product.color.join(", ")}
@@ -270,7 +270,7 @@ function initializeProductDetailPage(product) {
       }
 
       const quantity = parseInt(
-        document.getElementById("product-quantity").value
+        document.getElementById("product-quantity").value,
       );
 
       try {

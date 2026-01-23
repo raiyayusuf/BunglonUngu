@@ -1,3 +1,4 @@
+// js\data\products.js:
 import { flowerProducts, getImagePath } from "./imageMapping.js";
 
 export const products = flowerProducts.map((product) => {
@@ -46,6 +47,6 @@ export const priceRange = {
   min: Math.min(...products.map((p) => p.price)),
   max: Math.max(...products.map((p) => p.price)),
   average: Math.round(
-    products.reduce((sum, p) => sum + p.price, 0) / products.length
+    products.reduce((sum, p) => sum + p.price, 0) / products.length,
   ),
 };

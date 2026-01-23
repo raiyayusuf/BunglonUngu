@@ -1,5 +1,4 @@
-// bismillah percobaan 25 foto sek hehe
-
+// js\data\imageMapping.js
 export const flowerProducts = [
   // Bouquet Flowers====================================
   {
@@ -410,13 +409,6 @@ export const flowerProducts = [
   },
 ];
 
-// function untuk cari image path
-// export function getImagePath(product) {
-//   const folder = product.packaging;
-//   const filename = product.filename;
-//   return `assets/images/flowers/${folder}/${product.filename}`;
-// }
-
 export function getImagePath(product) {
   const folder = product.packaging;
   const filename = product.filename;
@@ -426,19 +418,3 @@ export function getImagePath(product) {
 
   return path;
 }
-
-// // get unique catergory
-// export const categories = [
-//   { id: "bouquet", name: "Buket Esklusif", icon: "💐", count: 12 },
-//   { id: "bunch", name: "Bunch", icon: "🌿", count: 6 },
-//   { id: "bag", name: "Tas Transparan", icon: "🧺", count: 7 },
-// ];
-
-// // get unique flower type
-// export const flowerTypes = [
-//   { id: "rose", name: "Mawar", icon: "🌹" },
-//   { id: "tulip", name: "Tulip", icon: "🌷" },
-//   { id: "gerbera", name: "Gerbera", icon: "🌼" },
-//   { id: "hydrangea", name: "Hydrangea", icon: "💮" },
-//   { id: "mixed", name: "Campuran", icon: "🪷" },
-// ];

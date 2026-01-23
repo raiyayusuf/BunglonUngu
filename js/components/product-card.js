@@ -1,3 +1,4 @@
+// js\components\product-card.js:
 import { addToCart } from "../services/cart-service.js";
 import { navigateTo } from "../router.js";
 
@@ -6,8 +7,8 @@ function renderColorChips(colors) {
     .map(
       (color) =>
         `<span class="color-chip" style="background-color: ${getColorCode(
-          color
-        )}" title="${color}"></span>`
+          color,
+        )}" title="${color}"></span>`,
     )
     .join("");
 }
@@ -83,8 +84,8 @@ export function createProductCard(product) {
         ${featuredBadge}
         <span class="product-badge category">
           ${categoryIcons[product.category] || "🌼"} ${
-    categoryNames[product.category] || product.category
-  }
+            categoryNames[product.category] || product.category
+          }
         </span>
       </div>
       <button class="quick-view-btn" data-id="${product.id}">
@@ -101,8 +102,8 @@ export function createProductCard(product) {
           <span class="meta-label">Jenis:</span>
           <span class="meta-value flower-type">
             ${flowerIcons[product.flowerType] || "🌼"} ${
-    flowerNames[product.flowerType] || product.flowerType
-  }
+              flowerNames[product.flowerType] || product.flowerType
+            }
           </span>
         </div>
         
@@ -123,12 +124,12 @@ export function createProductCard(product) {
       <div class="product-footer">
         <div class="price-rating">
           <span class="product-price">Rp ${product.price.toLocaleString(
-            "id-ID"
+            "id-ID",
           )}</span>
           <span class="product-rating">
             ⭐ ${product.rating} <small>(${
-    Math.floor(Math.random() * 50) + 10
-  })</small>
+              Math.floor(Math.random() * 50) + 10
+            })</small>
           </span>
         </div>
         

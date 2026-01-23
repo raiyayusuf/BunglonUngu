@@ -1,4 +1,4 @@
-// js/services/product-service.js - FIXED
+// js/services/product-service.js
 import { products } from "../data/products.js";
 
 export function filterProducts(filters = {}) {
@@ -6,13 +6,13 @@ export function filterProducts(filters = {}) {
 
   if (filters.category && filters.category.length > 0) {
     filtered = filtered.filter((product) =>
-      filters.category.includes(product.category)
+      filters.category.includes(product.category),
     );
   }
 
   if (filters.flowerType && filters.flowerType.length > 0) {
     filtered = filtered.filter((product) =>
-      filters.flowerType.includes(product.flowerType)
+      filters.flowerType.includes(product.flowerType),
     );
   }
 
@@ -20,19 +20,19 @@ export function filterProducts(filters = {}) {
     filtered = filtered.filter(
       (product) =>
         product.price >= filters.priceRange.min &&
-        product.price <= filters.priceRange.max
+        product.price <= filters.priceRange.max,
     );
   }
 
   if (filters.colors && filters.colors.length > 0) {
     filtered = filtered.filter((product) =>
-      product.color.some((color) => filters.colors.includes(color))
+      product.color.some((color) => filters.colors.includes(color)),
     );
   }
 
   if (filters.tags && filters.tags.length > 0) {
     filtered = filtered.filter((product) =>
-      product.tags.some((tag) => filters.tags.includes(tag))
+      product.tags.some((tag) => filters.tags.includes(tag)),
     );
   }
 
@@ -47,7 +47,7 @@ export function filterProducts(filters = {}) {
         product.name.toLowerCase().includes(keyword) ||
         product.description.toLowerCase().includes(keyword) ||
         product.tags.some((tag) => tag.toLowerCase().includes(keyword)) ||
-        product.color.some((color) => color.toLowerCase().includes(keyword))
+        product.color.some((color) => color.toLowerCase().includes(keyword)),
     );
   }
 
@@ -111,7 +111,7 @@ export function getProductById(id) {
 
 export function getProductsInPriceRange(min, max) {
   return products.filter(
-    (product) => product.price >= min && product.price <= max
+    (product) => product.price >= min && product.price <= max,
   );
 }
 
@@ -130,7 +130,7 @@ export function getRelatedProducts(productId, limit = 4) {
       (p.category === currentProduct.category ||
         p.flowerType === currentProduct.flowerType ||
         p.tags.some((tag) => currentProduct.tags.includes(tag)) ||
-        p.color.some((color) => currentProduct.color.includes(color)))
+        p.color.some((color) => currentProduct.color.includes(color))),
   );
 
   return related.sort(() => 0.5 - Math.random()).slice(0, limit);
@@ -156,7 +156,7 @@ export function getProductStats() {
 
 export function getFilteredAndSortedProducts(
   filters = {},
-  sortBy = "featured"
+  sortBy = "featured",
 ) {
   console.log("🔄 getFilteredAndSortedProducts START");
   console.log("Filters:", JSON.stringify(filters));

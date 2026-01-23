@@ -1,3 +1,4 @@
+// js\views\categories.js:
 import {
   categories,
   flowerTypes,
@@ -39,7 +40,7 @@ export function loadCategoriesPage() {
                   Lihat Produk
                 </button>
               </div>
-            `
+            `,
               )
               .join("")}
           </div>
@@ -62,7 +63,7 @@ export function loadCategoriesPage() {
                   Lihat Produk
                 </button>
               </div>
-            `
+            `,
               )
               .join("")}
           </div>
@@ -94,7 +95,7 @@ export function loadCategoriesPage() {
                   Lihat Produk
                 </button>
               </div>
-            `
+            `,
               )
               .join("")}
           </div>
@@ -161,7 +162,7 @@ function initializeCategoriesPage() {
       }
 
       console.log(
-        `🎯 Filter to apply: ${filterType} = ${filterValue} (${filterLabel})`
+        `🎯 Filter to apply: ${filterType} = ${filterValue} (${filterLabel})`,
       );
 
       if (filterType && filterValue) {

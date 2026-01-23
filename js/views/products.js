@@ -1,3 +1,4 @@
+// js\views\products.js:
 import { products } from "../data/products.js";
 import { addToCart } from "../services/cart-service.js";
 import {
@@ -170,7 +171,7 @@ function renderHeader() {
     }
   } else if (currentFilters.flowerType.length > 0) {
     const flower = flowerTypes.find(
-      (f) => f.id === currentFilters.flowerType[0]
+      (f) => f.id === currentFilters.flowerType[0],
     );
     if (flower) {
       title = `${flower.icon} Bunga ${flower.name}`;
@@ -212,8 +213,8 @@ function renderActiveFilters() {
         .map(
           (filter) => `
         <div class="active-filter" data-type="${filter.type}" data-value="${
-            filter.value
-          }">
+          filter.value
+        }">
           ${filter.icon || ""} ${filter.label}
           <button class="remove-filter" data-type="${
             filter.type
@@ -221,7 +222,7 @@ function renderActiveFilters() {
             <i class="fas fa-times"></i>
           </button>
         </div>
-      `
+      `,
         )
         .join("")}
       <button class="clear-filters" id="clear-all-filters">
@@ -275,7 +276,7 @@ function renderSidebarFilters() {
                 <span class="filter-count">${cat.count}</span>
               </span>
             </label>
-          `
+          `,
             )
             .join("")}
         </div>
@@ -299,7 +300,7 @@ function renderSidebarFilters() {
                 <span class="filter-count">${type.count}</span>
               </span>
             </label>
-          `
+          `,
             )
             .join("")}
         </div>
@@ -323,7 +324,7 @@ function renderSidebarFilters() {
                 <span class="filter-count">${range.count}</span>
               </span>
             </label>
-          `
+          `,
             )
             .join("")}
         </div>
@@ -358,7 +359,7 @@ function renderSidebarFilters() {
               title="${color.name}"
               data-color="${color.name}"
             ></div>
-          `
+          `,
             )
             .join("")}
         </div>
@@ -378,7 +379,7 @@ function renderSidebarFilters() {
             >
               ${tag.name} <span class="filter-count">${tag.count}</span>
             </button>
-          `
+          `,
             )
             .join("")}
         </div>
@@ -439,11 +440,11 @@ function renderMainContent() {
               .map(
                 (option) => `
               <option value="${option.id}" ${
-                  currentSort === option.id ? "selected" : ""
-                }>
+                currentSort === option.id ? "selected" : ""
+              }>
                 ${option.icon} ${option.name}
               </option>
-            `
+            `,
               )
               .join("")}
           </select>
@@ -515,7 +516,7 @@ function getActiveFiltersArray() {
 
   if (currentFilters.priceRange) {
     const range = priceRanges.find(
-      (r) => r.id === currentFilters.priceRange.id
+      (r) => r.id === currentFilters.priceRange.id,
     );
     if (range) {
       active.push({
@@ -673,7 +674,7 @@ function setupEventListeners() {
       debounce((e) => {
         currentFilters.searchKeyword = e.target.value.trim();
         updateProductsDisplay();
-      }, 300)
+      }, 300),
     );
   });
 
@@ -684,7 +685,7 @@ function setupEventListeners() {
         currentFilters.category.push(value);
       } else {
         currentFilters.category = currentFilters.category.filter(
-          (c) => c !== value
+          (c) => c !== value,
         );
       }
       updateProductsDisplay();
@@ -698,7 +699,7 @@ function setupEventListeners() {
         currentFilters.flowerType.push(value);
       } else {
         currentFilters.flowerType = currentFilters.flowerType.filter(
-          (t) => t !== value
+          (t) => t !== value,
         );
       }
       updateProductsDisplay();
@@ -757,7 +758,7 @@ function setupEventListeners() {
       const color = e.target.dataset.color;
       if (currentFilters.colors.includes(color)) {
         currentFilters.colors = currentFilters.colors.filter(
-          (c) => c !== color
+          (c) => c !== color,
         );
         e.target.classList.remove("selected");
       } else {
@@ -866,10 +867,10 @@ function removeFilter(type, value) {
   switch (type) {
     case "category":
       currentFilters.category = currentFilters.category.filter(
-        (c) => c !== value
+        (c) => c !== value,
       );
       const categoryCheckbox = document.querySelector(
-        `input[name="category"][value="${value}"]`
+        `input[name="category"][value="${value}"]`,
       );
       if (categoryCheckbox) {
         categoryCheckbox.checked = false;
@@ -878,10 +879,10 @@ function removeFilter(type, value) {
 
     case "flowerType":
       currentFilters.flowerType = currentFilters.flowerType.filter(
-        (t) => t !== value
+        (t) => t !== value,
       );
       const flowerTypeCheckbox = document.querySelector(
-        `input[name="flowerType"][value="${value}"]`
+        `input[name="flowerType"][value="${value}"]`,
       );
       if (flowerTypeCheckbox) {
         flowerTypeCheckbox.checked = false;
@@ -898,7 +899,7 @@ function removeFilter(type, value) {
     case "colors":
       currentFilters.colors = currentFilters.colors.filter((c) => c !== value);
       const colorChip = document.querySelector(
-        `.color-chip[data-color="${value}"]`
+        `.color-chip[data-color="${value}"]`,
       );
       if (colorChip) {
         colorChip.classList.remove("selected");
@@ -908,7 +909,7 @@ function removeFilter(type, value) {
     case "tags":
       currentFilters.tags = currentFilters.tags.filter((t) => t !== value);
       const tagButton = document.querySelector(
-        `.tag-filter[data-tag="${value}"]`
+        `.tag-filter[data-tag="${value}"]`,
       );
       if (tagButton) {
         tagButton.classList.remove("selected");
@@ -918,7 +919,7 @@ function removeFilter(type, value) {
     case "featuredOnly":
       currentFilters.featuredOnly = false;
       const featuredCheckbox = document.querySelector(
-        'input[name="featuredOnly"]'
+        'input[name="featuredOnly"]',
       );
       if (featuredCheckbox) {
         featuredCheckbox.checked = false;
@@ -928,7 +929,7 @@ function removeFilter(type, value) {
     case "inStockOnly":
       currentFilters.inStockOnly = true;
       const inStockCheckbox = document.querySelector(
-        'input[name="inStockOnly"]'
+        'input[name="inStockOnly"]',
       );
       if (inStockCheckbox) {
         inStockCheckbox.checked = true;

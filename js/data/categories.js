@@ -1,3 +1,4 @@
+// js\data\categories.js:
 import { products } from "./products.js";
 
 console.log("📊 Loading categories.js, products count:", products.length);
@@ -134,7 +135,7 @@ export const priceStats = {
   min: Math.min(...products.map((p) => p.price)),
   max: Math.max(...products.map((p) => p.price)),
   average: Math.round(
-    products.reduce((sum, p) => sum + p.price, 0) / products.length
+    products.reduce((sum, p) => sum + p.price, 0) / products.length,
   ),
 };
 
